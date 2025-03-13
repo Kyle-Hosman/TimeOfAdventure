@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    Animator animator;
     private float _health = 1f;
 
     public float health {
@@ -21,9 +22,17 @@ public class Enemy : MonoBehaviour
     //     Debug.Log("Enemy took " + damage + " damage");
     //     health -= damage;
     // }
+    private void Start() {
+        animator = GetComponent<Animator>();
+    }   
 
     public void Die() {
-        Destroy(gameObject);
         Debug.Log("Enemy died");
+        // Add any death animation or effects here
+        animator.SetTrigger("Die");
+    }
+
+    public void RemoveEnemy() {
+        Destroy(gameObject);
     }
 }

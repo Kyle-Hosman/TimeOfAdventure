@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7216659859917615723}
   - component: {fileID: 7247630450837784149}
   - component: {fileID: 2720426343607848565}
+  - component: {fileID: 2827642739790340629}
   m_Layer: 0
   m_Name: Orc
   m_TagString: Enemy
@@ -175,3 +176,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9900de34f8e824885ad592d648efaeff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &2827642739790340629
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343127761784943355}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 419aa0188b6ca40e39a6c4ce8c8ac864, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
