@@ -12,21 +12,11 @@ public class SwordAttack : MonoBehaviour
     }
 
     public void AttackRight() {
-        if (GameManager.Instance.chatPanel.activeInHierarchy) {
-            Debug.Log("Sword attack disabled due to chat panel active");
-            return; // Disable attack if chat panel is active
-        } // Disable attack if chat panel is active
-        Debug.Log("Sword attack right");
         swordCollider.enabled = true;
         transform.localPosition = rightAttackOffset;
     }
 
     public void AttackLeft() {
-        if (GameManager.Instance.chatPanel.activeInHierarchy) {
-            Debug.Log("Sword attack disabled due to chat panel active");
-            return; // Disable attack if chat panel is active
-        } // Disable attack if chat panel is active
-        Debug.Log("Sword attack left");
         swordCollider.enabled = true;
         transform.localPosition = new Vector2(-rightAttackOffset.x, rightAttackOffset.y);
     }
@@ -37,7 +27,6 @@ public class SwordAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Enemy")) {
-            Debug.Log("Hit enemy");
             // Assuming the enemy has a script with a health property
             Enemy enemy = other.GetComponent<Enemy>();
 

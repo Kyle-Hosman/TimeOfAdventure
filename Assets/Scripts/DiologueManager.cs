@@ -39,6 +39,12 @@ public class DialogueManager : MonoBehaviour
         DialogTitleText.text = title;
         DialogBodyText.text = node.dialogueText;
 
+        // Execute the action associated with this node if the flag is set
+        if (node.runEventOnNodeProcessed)
+        {
+            node.onNodeProcessed?.Invoke();
+        }
+
         // Remove any existing response buttons
         foreach (Transform child in responseButtonContainer)
         {
@@ -59,6 +65,12 @@ public class DialogueManager : MonoBehaviour
     // Handles response selection and triggers next dialogue node
     public void SelectResponse(DialogueResponse response, string title)
     {
+        // Execute the action associated with this response if the flag is set
+        if (response.runEventOnResponseSelected)
+        {
+            response.onResponseSelected?.Invoke();
+        }
+
         // Check if there's a follow-up node
         if (response.nextNode != null && !response.nextNode.IsLastNode())
         {
