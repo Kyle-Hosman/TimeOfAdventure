@@ -12,6 +12,8 @@ public class DialogueManager : MonoBehaviour
     public GameObject responseButtonPrefab; // Prefab for generating response buttons
     public Transform responseButtonContainer; // Container to hold response buttons
 
+    private Actor currentActor; // Reference to the current actor
+
     private void Awake()
     {
         // Singleton pattern to ensure only one instance of DialogueManager
@@ -29,21 +31,17 @@ public class DialogueManager : MonoBehaviour
         HideDialogue();
     }
 
-    // Starts the dialogue with given title and dialogue node
-    public void StartDialogue(string title, DialogueNode node)
+    // Starts the dialogue with given title, dialogue node, and actor
+    public void StartDialogue(string title, DialogueNode node, Actor actor)
     {
+        currentActor = actor; // Set the current actor
+
         // Display the dialogue UI
         ShowDialogue();
 
         // Set dialogue title and body text
         DialogTitleText.text = title;
         DialogBodyText.text = node.dialogueText;
-
-        // Execute the action associated with this node if the flag is set
-        if (node.runEventOnNodeProcessed)
-        {
-            node.onNodeProcessed?.Invoke();
-        }
 
         // Remove any existing response buttons
         foreach (Transform child in responseButtonContainer)
@@ -65,21 +63,16 @@ public class DialogueManager : MonoBehaviour
     // Handles response selection and triggers next dialogue node
     public void SelectResponse(DialogueResponse response, string title)
     {
-        // Execute the action associated with this response if the flag is set
-        if (response.runEventOnResponseSelected)
-        {
-            response.onResponseSelected?.Invoke();
-        }
-
         // Check if there's a follow-up node
         if (response.nextNode != null && !response.nextNode.IsLastNode())
         {
-            StartDialogue(title, response.nextNode); // Start next dialogue
+            StartDialogue(title, response.nextNode, currentActor); // Start next dialogue
         }
         else
         {
             // If no follow-up node, end the dialogue
             HideDialogue();
+            currentActor.TriggerHoodUpAnimation(); // Trigger the "hoodUp" animation
         }
     }
 
