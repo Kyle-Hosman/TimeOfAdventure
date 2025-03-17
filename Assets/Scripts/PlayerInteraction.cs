@@ -8,18 +8,17 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
-        if (canInteract && Input.GetKeyDown(KeyCode.E)) // Press 'E' to interact
+        if (canInteract && Input.GetKeyDown(KeyCode.E)) 
         {
+            // Check if the player is near an NPC and trigger the dialogue
             if (currentNPC != null)
             {
-                chatPanel.SetActive(true);
+                DialogueTrigger dialogueTrigger = currentNPC.GetComponent<DialogueTrigger>();
+                if (dialogueTrigger != null)
+                {
+                    DialogueManager.Instance.StartDialogue(dialogueTrigger.dialogueLines);
+                }
             }
-        }
-
-        // Close the chat with Z key
-        if (chatPanel.activeSelf && Input.GetKeyDown(KeyCode.Z))
-        {
-            chatPanel.SetActive(false);
         }
     }
 
