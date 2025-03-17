@@ -13,10 +13,10 @@ public class PlayerInteraction : MonoBehaviour
             // Check if the player is near an NPC and trigger the dialogue
             if (currentNPC != null)
             {
-                DialogueTrigger dialogueTrigger = currentNPC.GetComponent<DialogueTrigger>();
-                if (dialogueTrigger != null)
+                Actor actor = currentNPC.GetComponent<Actor>();
+                if (actor != null)
                 {
-                    DialogueManager.Instance.StartDialogue(dialogueTrigger.dialogueLines);
+                    actor.SpeakTo();
                 }
             }
         }

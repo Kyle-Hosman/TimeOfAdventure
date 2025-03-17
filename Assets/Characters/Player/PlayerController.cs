@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.Instance.chatPanel.activeInHierarchy){
+            animator.SetBool("isMoving", false); // Disable movement if chat panel is active     
+            return;
+        } 
+
         if (!canMove) return;
         if (movementInput != Vector2.zero)
         {
@@ -94,6 +99,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void OnAttack () {
+        if (GameManager.Instance.chatPanel.activeInHierarchy) return; // Disable attack if chat panel is active
         animator.SetTrigger("swordAttack");
     }
 

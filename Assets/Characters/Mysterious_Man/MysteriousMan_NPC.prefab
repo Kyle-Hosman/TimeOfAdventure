@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6881331335947568616}
   - component: {fileID: 8182839793549482864}
   - component: {fileID: 4421652376596285061}
-  - component: {fileID: 8131439229435094420}
+  - component: {fileID: 3681532070124106638}
   m_Layer: 0
   m_Name: MysteriousMan_NPC
   m_TagString: NPC
@@ -158,7 +158,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.625, y: 1.875}
   m_EdgeRadius: 0
---- !u!114 &8131439229435094420
+--- !u!114 &3681532070124106638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,12 +167,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 394439629955327908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a01ee4707fdae4dcfbb00663aea0ce94, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b1e4cd8ed29e4835bdd710de4736105, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
-  - Sounds good!
-  - Nah, maybe later...
-  choices:
-  - Ok
-  - No
+  Name: Mysterious Man
+  Dialogue: {fileID: 0}

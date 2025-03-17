@@ -1,133 +1,91 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager Instance;
+    public static DialogueManager Instance { get; private set; }
 
-    [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private GameObject continueIcon;
+    // UI references
+    public GameObject DialogueParent; // Main container for dialogue UI
+    public TextMeshProUGUI DialogTitleText, DialogBodyText; // Text components for title and body
+    public GameObject responseButtonPrefab; // Prefab for generating response buttons
+    public Transform responseButtonContainer; // Container to hold response buttons
 
-    [Header("Choice System")]
-    [SerializeField] private GameObject choicePanel; 
-    [SerializeField] private Button[] choiceButtons;
-
-    private Queue<DialogueLine> dialogueLines;
-    private bool isDialogueActive = false;
-
-    void Awake()
+    private void Awake()
     {
-        dialoguePanel.SetActive(false);
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-
-        dialogueLines = new Queue<DialogueLine>();
-    }
-
-    public void StartDialogue(DialogueLine[] lines)
-    {
-        Debug.Log("Starting dialogue...");
-        dialoguePanel.SetActive(true);
-        choicePanel.SetActive(false);
-        dialogueLines.Clear();
-        isDialogueActive = true;
-
-        foreach (DialogueLine line in lines)
+        // Singleton pattern to ensure only one instance of DialogueManager
+        if (Instance == null)
         {
-            Debug.Log("Enqueuing line: " + line.line);
-            dialogueLines.Enqueue(line);
-        }
-
-        DisplayNextSentence();
-    }
-
-    public void DisplayNextSentence()
-    {
-        if (dialogueLines.Count == 0)
-        {
-            Debug.Log("No more sentences. Ending dialogue.");
-            EndDialogue();
-            return;
-        }
-
-        DialogueLine dialogueLine = dialogueLines.Dequeue();
-        Debug.Log("Displaying sentence: " + dialogueLine.line);
-        
-        StopAllCoroutines();
-        StartCoroutine(TypeSentence(dialogueLine.line));
-
-        if (dialogueLine.choices != null && dialogueLine.choices.Length > 0)
-        {
-            choicePanel.SetActive(true);
-            ShowChoices(dialogueLine.choices);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            choicePanel.SetActive(false);
+            Destroy(gameObject);
         }
+
+        // Initially hide the dialogue UI
+        HideDialogue();
     }
 
-    IEnumerator TypeSentence(string sentence)
+    // Starts the dialogue with given title and dialogue node
+    public void StartDialogue(string title, DialogueNode node)
     {
-        dialogueText.text = "";
-        continueIcon.SetActive(false);
+        // Display the dialogue UI
+        ShowDialogue();
 
-        foreach (char letter in sentence.ToCharArray())
+        // Set dialogue title and body text
+        DialogTitleText.text = title;
+        DialogBodyText.text = node.dialogueText;
+
+        // Remove any existing response buttons
+        foreach (Transform child in responseButtonContainer)
         {
-            dialogueText.text += letter;
-            Debug.Log("Adding letter: " + letter);
-            yield return new WaitForSeconds(0.02f);
+            Destroy(child.gameObject);
         }
 
-        continueIcon.SetActive(true);
-        Debug.Log("Finished typing sentence.");
-    }
-
-    private void ShowChoices(string[] choices)
-    {
-        Debug.Log("Showing choices...");
-        for (int i = 0; i < choiceButtons.Length; i++)
+        // Create and setup response buttons based on current dialogue node
+        foreach (DialogueResponse response in node.responses)
         {
-            if (i < choices.Length)
-            {
-                choiceButtons[i].gameObject.SetActive(true);
-                int choiceIndex = i; // Capture index for lambda function
-                choiceButtons[i].onClick.RemoveAllListeners();
-                choiceButtons[i].onClick.AddListener(() => SelectChoice(choiceIndex));
-                choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = choices[i];
-                Debug.Log("Setting choice button " + i + " text to: " + choices[i]);
-            }
-            else
-            {
-                choiceButtons[i].gameObject.SetActive(false);
-            }
+            GameObject buttonObj = Instantiate(responseButtonPrefab, responseButtonContainer);
+            buttonObj.GetComponentInChildren<TextMeshProUGUI>().text = response.responseText;
+
+            // Setup button to trigger SelectResponse when clicked
+            buttonObj.GetComponent<Button>().onClick.AddListener(() => SelectResponse(response, title));
         }
     }
 
-    private void SelectChoice(int choiceIndex)
+    // Handles response selection and triggers next dialogue node
+    public void SelectResponse(DialogueResponse response, string title)
     {
-        Debug.Log("Player selected choice index: " + choiceIndex);
-
-        choicePanel.SetActive(false);
-        EndDialogue();
-    }
-
-    void EndDialogue()
-    {
-        Debug.Log("Ending dialogue...");
-        dialoguePanel.SetActive(false);
-        isDialogueActive = false;
-    }
-
-    void Update()
-    {
-        if (isDialogueActive && Input.GetKeyDown(KeyCode.Z) && choicePanel.activeSelf == false)
+        // Check if there's a follow-up node
+        if (response.nextNode != null && !response.nextNode.IsLastNode())
         {
-            DisplayNextSentence();
+            StartDialogue(title, response.nextNode); // Start next dialogue
         }
+        else
+        {
+            // If no follow-up node, end the dialogue
+            HideDialogue();
+        }
+    }
+
+    // Hide the dialogue UI
+    public void HideDialogue()
+    {
+        DialogueParent.SetActive(false);
+    }
+
+    // Show the dialogue UI
+    private void ShowDialogue()
+    {
+        DialogueParent.SetActive(true);
+    }
+
+    // Check if dialogue is currently active
+    public bool IsDialogueActive()
+    {
+        return DialogueParent.activeSelf;
     }
 }
