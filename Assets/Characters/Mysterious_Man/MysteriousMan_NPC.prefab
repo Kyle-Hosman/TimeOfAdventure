@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8182839793549482864}
   - component: {fileID: 4421652376596285061}
   - component: {fileID: 3681532070124106638}
+  - component: {fileID: 3430043146958400211}
   m_Layer: 0
   m_Name: MysteriousMan_NPC
   m_TagString: NPC
@@ -172,3 +173,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Mysterious Man
   Dialogue: {fileID: 0}
+  npcAnimator: {fileID: 0}
+--- !u!114 &3430043146958400211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394439629955327908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_Priority: 100
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 00000000db60f594
+  m_ShapePath:
+  - {x: -0.3125, y: -0.9375, z: 0}
+  - {x: -0.3125, y: 0.93749976, z: 0}
+  - {x: 0.3125, y: 0.93749976, z: 0}
+  - {x: 0.3125, y: -0.9375, z: 0}
+  m_ShapePathHash: 0
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 6881331335947568616}
+  m_ShadowShape2DProvider:
+    rid: 2888369090356051969
+  m_ShadowCastingSource: 2
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0.13250732, y: 0.7575073, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0.18
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0.03
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0.18
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 2
+  m_PreviousShadowShape2DSource: {fileID: 6881331335947568616}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2888369090356051969
+      type: {class: ShadowShape2DProvider_SpriteRenderer, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
+      data: 
