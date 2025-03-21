@@ -22,6 +22,7 @@ public class InputEvents
     public event Action<InputEventContext> onSubmitPressed;
     public void SubmitPressed()
     {
+        Debug.Log("quest started"); // Log "quest started" when the event is fired
         if (onSubmitPressed != null) 
         {
             onSubmitPressed(this.inputEventContext);

@@ -70,12 +70,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private void UpdateAnimations() 
     {
-        // update the animator parameters
+        // updat the animator parameters
         bool walking = (velocity.magnitude > 0.01f);
         animator.SetBool("walking", walking);
         animator.SetFloat("velocity_x", velocity.x);
         animator.SetFloat("velocity_y", velocity.y);
-
         // facing dir for idle animations
         if (walking) 
         {
