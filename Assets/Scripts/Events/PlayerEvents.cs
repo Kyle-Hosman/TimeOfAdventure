@@ -47,4 +47,31 @@ public class PlayerEvents
             onPlayerExperienceChange(experience);
         }
     }
+
+    public event Action<int> onHealthChanged;
+    public void HealthChanged(int healthChange) 
+    {
+        if (onHealthChanged != null) 
+        {
+            onHealthChanged(healthChange);
+        }
+    }
+
+    public event Action<int> onPlayerHealthChange;
+    public void PlayerHealthChange(int health) 
+    {
+        if (onPlayerHealthChange != null) 
+        {
+            onPlayerHealthChange(health);
+        }
+    }
+
+    public event Action onPlayerDeath;
+    public void PlayerDeath() 
+    {
+        if (onPlayerDeath != null) 
+        {
+            onPlayerDeath();
+        }
+    }
 }
