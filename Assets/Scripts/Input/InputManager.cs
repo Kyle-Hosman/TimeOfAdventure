@@ -10,38 +10,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
-    private PlayerInput playerInput;
-
-    private void Awake()
-    {
-        playerInput = GetComponent<PlayerInput>();
-    }
-
-    private void OnEnable()
-    {
-        playerInput.onActionTriggered += OnActionTriggered;
-    }
-
-    private void OnDisable()
-    {
-        playerInput.onActionTriggered -= OnActionTriggered;
-    }
-
-    private void OnActionTriggered(InputAction.CallbackContext context)
-    {
-        // Check if the action is Move and call MovePressed
-        if (context.action.name == "Move")
-        {
-            MovePressed(context);
-        }
-    }
-
     public void MovePressed(InputAction.CallbackContext context)
     {
         if (context.performed || context.canceled)
         {
-            Vector2 moveDir = context.ReadValue<Vector2>();
-            GameEventsManager.instance.inputEvents.MovePressed(moveDir);
+            GameEventsManager.instance.inputEvents.MovePressed(context.ReadValue<Vector2>());
         }
     }
 

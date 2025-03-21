@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &394439629955327908
+--- !u!1 &1964423331256861398
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5346857537862889453}
-  - component: {fileID: 6881331335947568616}
-  - component: {fileID: 8182839793549482864}
-  - component: {fileID: 3430043146958400211}
-  - component: {fileID: 3956199306940204375}
-  - component: {fileID: 7754521929243746310}
+  - component: {fileID: 5908241613122428130}
+  - component: {fileID: 2797622936307730818}
   m_Layer: 0
-  m_Name: MysteriousMan_NPC
-  m_TagString: NPC
+  m_Name: Visual
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5346857537862889453
+--- !u!4 &5908241613122428130
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394439629955327908}
+  m_GameObject: {fileID: 1964423331256861398}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 3.66, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7050164394950739868}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 7832540173773265011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6881331335947568616
+--- !u!212 &2797622936307730818
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394439629955327908}
+  m_GameObject: {fileID: 1964423331256861398}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -80,100 +75,60 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
-  m_Sprite: {fileID: 7693420782646087326, guid: 0e201ddcd32564327ae7cdb38a0d3cf0, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 7cefe9e9e8c984bbd9ff43235be8f54f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.0625, y: 1.25}
+  m_Size: {x: 1.5, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &8182839793549482864
-Animator:
-  serializedVersion: 7
+--- !u!1 &5645374831352172037
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394439629955327908}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 44d9e72ab605643fcbd1d53025bff755, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3430043146958400211
-MonoBehaviour:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7832540173773265011}
+  - component: {fileID: 1683693998369933133}
+  - component: {fileID: 2425757378907650557}
+  m_Layer: 0
+  m_Name: QuestPoint 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7832540173773265011
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394439629955327908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_Priority: 100
-  m_ComponentVersion: 5
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_AlphaCutoff: 0.1
-  m_ApplyToSortingLayers: 00000000db60f594
-  m_ShapePath:
-  - {x: -0.3125, y: -0.9375, z: 0}
-  - {x: -0.3125, y: 0.93749976, z: 0}
-  - {x: 0.3125, y: 0.93749976, z: 0}
-  - {x: 0.3125, y: -0.9375, z: 0}
-  m_ShapePathHash: 0
-  m_InstanceId: 0
-  m_ShadowShape2DComponent: {fileID: 6881331335947568616}
-  m_ShadowShape2DProvider:
-    rid: 2888369090356051969
-  m_ShadowCastingSource: 2
-  m_ShadowMesh:
-    m_Mesh: {fileID: 0}
-    m_LocalBounds:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.13250732, y: 0.7575073, z: 0}
-    m_EdgeProcessing: 1
-    m_TrimEdge: 0.18
-    m_FlipX: 0
-    m_FlipY: 0
-    m_InitialTrim: 0
-  m_CastingOption: 1
-  m_PreviousTrimEdge: 0.18
-  m_PreviousEdgeProcessing: 1
-  m_PreviousShadowCastingSource: 2
-  m_PreviousShadowShape2DSource: {fileID: 6881331335947568616}
-  references:
-    version: 2
-    RefIds:
-    - rid: 2888369090356051969
-      type: {class: ShadowShape2DProvider_SpriteRenderer, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.2D.Runtime}
-      data: 
---- !u!58 &3956199306940204375
+  m_GameObject: {fileID: 5645374831352172037}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.5, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5908241613122428130}
+  - {fileID: 5225613662344712159}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1683693998369933133
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394439629955327908}
+  m_GameObject: {fileID: 5645374831352172037}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -197,35 +152,35 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.9375
---- !u!114 &7754521929243746310
+  m_Radius: 2
+--- !u!114 &2425757378907650557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394439629955327908}
+  m_GameObject: {fileID: 5645374831352172037}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 665634027c61d77469962dbe73b5aae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueKnotName: 
-  questInfoForPoint: {fileID: 11400000, guid: 344908d5bd98848efb39d6f864ba6247, type: 2}
+  dialogueKnotName: collectCoinsStart
+  questInfoForPoint: {fileID: 11400000, guid: 8d2d7b9c64a7f354e9dce4d9d3083288, type: 2}
   startPoint: 1
-  finishPoint: 1
---- !u!1001 &3305855650660499099
+  finishPoint: 0
+--- !u!1001 &338595617038104280
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5346857537862889453}
+    m_TransformParent: {fileID: 7832540173773265011}
     m_Modifications:
     - target: {fileID: 5492127767073093894, guid: daa3ea25000e94b9abdf263359b6d1b9, type: 3}
       propertyPath: m_Name
@@ -276,8 +231,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daa3ea25000e94b9abdf263359b6d1b9, type: 3}
---- !u!4 &7050164394950739868 stripped
+--- !u!4 &5225613662344712159 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5492127767073093895, guid: daa3ea25000e94b9abdf263359b6d1b9, type: 3}
-  m_PrefabInstance: {fileID: 3305855650660499099}
+  m_PrefabInstance: {fileID: 338595617038104280}
   m_PrefabAsset: {fileID: 0}

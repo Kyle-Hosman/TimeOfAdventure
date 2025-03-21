@@ -7,7 +7,9 @@ public class InputEvents
 
     public void ChangeInputEventContext(InputEventContext newContext) 
     {
+        Debug.Log("Changing Input Event Context from " + this.inputEventContext + " to " + newContext);
         this.inputEventContext = newContext;
+        Debug.Log("New Input Event Context is " + this.inputEventContext);
     }
 
     public event Action<Vector2> onMovePressed;
@@ -22,7 +24,7 @@ public class InputEvents
     public event Action<InputEventContext> onSubmitPressed;
     public void SubmitPressed()
     {
-        Debug.Log("quest started"); // Log "quest started" when the event is fired
+        Debug.Log("Submit Pressed with Context: " + this.inputEventContext);
         if (onSubmitPressed != null) 
         {
             onSubmitPressed(this.inputEventContext);
@@ -32,6 +34,7 @@ public class InputEvents
     public event Action onQuestLogTogglePressed;
     public void QuestLogTogglePressed()
     {
+        Debug.Log("Quest Log Toggle Pressed with Context: " + this.inputEventContext);
         if (onQuestLogTogglePressed != null) 
         {
             onQuestLogTogglePressed();

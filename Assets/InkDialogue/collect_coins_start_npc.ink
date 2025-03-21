@@ -14,7 +14,7 @@ Come back once you've leveled up a bit more.
 -> END
 
 = canStart
-Will you collect 5 coins and bring them to my friend over there?
+Will you collect 3 coins and bring them to my friend over there?
 * [Yes]
     ~ StartQuest(CollectCoinsQuestId)
     Great!
