@@ -11,7 +11,6 @@ public class GameEventsManager : MonoBehaviour
     public MiscEvents miscEvents;
     public QuestEvents questEvents;
     public DialogueEvents dialogueEvents;
-
     public MushroomEvents mushroomEvents;
 
     private void Awake()
