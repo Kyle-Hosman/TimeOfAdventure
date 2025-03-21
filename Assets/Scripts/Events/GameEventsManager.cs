@@ -12,6 +12,8 @@ public class GameEventsManager : MonoBehaviour
     public QuestEvents questEvents;
     public DialogueEvents dialogueEvents;
 
+    public MushroomEvents mushroomEvents;
+
     private void Awake()
     {
         if (instance != null)
@@ -27,5 +29,6 @@ public class GameEventsManager : MonoBehaviour
         miscEvents = new MiscEvents();
         questEvents = new QuestEvents();
         dialogueEvents = new DialogueEvents();
+        mushroomEvents = new MushroomEvents();
     }
 }

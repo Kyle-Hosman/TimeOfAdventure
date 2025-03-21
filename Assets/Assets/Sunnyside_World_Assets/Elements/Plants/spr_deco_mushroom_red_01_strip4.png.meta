@@ -46,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -84,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -125,10 +125,10 @@ TextureImporter:
       name: spr_deco_mushroom_red_01_strip4_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 1
-        width: 12
-        height: 14
+        x: 5
+        y: 2
+        width: 10
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,10 +147,10 @@ TextureImporter:
       name: spr_deco_mushroom_red_01_strip4_1
       rect:
         serializedVersion: 2
-        x: 20
-        y: 1
-        width: 12
-        height: 13
+        x: 21
+        y: 2
+        width: 10
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,10 +169,10 @@ TextureImporter:
       name: spr_deco_mushroom_red_01_strip4_2
       rect:
         serializedVersion: 2
-        x: 36
-        y: 1
-        width: 12
-        height: 13
+        x: 37
+        y: 2
+        width: 10
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,10 +191,10 @@ TextureImporter:
       name: spr_deco_mushroom_red_01_strip4_3
       rect:
         serializedVersion: 2
-        x: 52
-        y: 1
-        width: 12
-        height: 14
+        x: 53
+        y: 2
+        width: 10
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 9ff7532d9ff2640b0874bd6c840d73fa
     internalID: 0
     vertices: []
     indices: 

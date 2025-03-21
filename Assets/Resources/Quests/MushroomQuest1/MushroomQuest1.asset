@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Pick a Mushroom
   levelRequirement: 0
   questPrerequisites: []
-  questStepPrefabs: []
+  questStepPrefabs:
+  - {fileID: 3846194262735840492, guid: 0213fb795131f475c931d0aee4e2ffbc, type: 3}
   goldReward: 10
   experienceReward: 50

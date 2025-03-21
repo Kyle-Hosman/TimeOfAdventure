@@ -20,4 +20,13 @@ public class MiscEvents
             onGemCollected();
         }
     }
+
+    public event Action onMushroomCollected;
+    public void MushroomCollected() 
+    {
+        if (onMushroomCollected != null) 
+        {
+            onMushroomCollected();
+        }
+    }
 }

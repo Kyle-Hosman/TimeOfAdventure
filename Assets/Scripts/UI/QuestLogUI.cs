@@ -11,7 +11,9 @@ public class QuestLogUI : MonoBehaviour
     [SerializeField] private GameObject contentParent;
     [SerializeField] private QuestLogScrollingList scrollingList;
     [SerializeField] private TextMeshProUGUI questDisplayNameText;
+    [SerializeField] private TextMeshProUGUI questDisplayNameText2;
     [SerializeField] private TextMeshProUGUI questStatusText;
+      [SerializeField] private TextMeshProUGUI questStatusText2;
     [SerializeField] private TextMeshProUGUI goldRewardsText;
     [SerializeField] private TextMeshProUGUI experienceRewardsText;
     [SerializeField] private TextMeshProUGUI levelRequirementsText;
@@ -78,15 +80,20 @@ public class QuestLogUI : MonoBehaviour
 
         // set the button color based on quest state
         questLogButton.SetState(quest.state);
+
+        // update quest tracker labels
+        SetQuestLogInfo(quest);
     }
 
     private void SetQuestLogInfo(Quest quest)
     {
         // quest name
         questDisplayNameText.text = quest.info.displayName;
+        questDisplayNameText2.text = quest.info.displayName;
 
         // status
         questStatusText.text = quest.GetFullStatusText();
+        questStatusText2.text = quest.GetFullStatusText();
 
         // requirements
         levelRequirementsText.text = "Level " + quest.info.levelRequirement;
