@@ -18,6 +18,7 @@ Hey stranger.. how about you pick one of those red mushrooms over there..
 Heheh..
 * [Ok..]
     ~ StartQuest(MushroomQuest1Id)
+    ~ PlayAnimation("MysteriousMan_NPC_dark,Hood_Up")
     Heheh..
 * [No]
     Your loss, stranger..

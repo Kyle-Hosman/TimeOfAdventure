@@ -24,7 +24,6 @@ public class InputEvents
     public event Action<InputEventContext> onSubmitPressed;
     public void SubmitPressed()
     {
-        Debug.Log("Submit Pressed with Context: " + this.inputEventContext);
         if (onSubmitPressed != null) 
         {
             onSubmitPressed(this.inputEventContext);
@@ -34,7 +33,6 @@ public class InputEvents
     public event Action onQuestLogTogglePressed;
     public void QuestLogTogglePressed()
     {
-        Debug.Log("Quest Log Toggle Pressed with Context: " + this.inputEventContext);
         if (onQuestLogTogglePressed != null) 
         {
             onQuestLogTogglePressed();
