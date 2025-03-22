@@ -12,6 +12,7 @@ public class GameEventsManager : MonoBehaviour
     public QuestEvents questEvents;
     public DialogueEvents dialogueEvents;
     public MushroomEvents mushroomEvents;
+    public InventoryEvents inventoryEvents;
 
     private void Awake()
     {
@@ -29,5 +30,6 @@ public class GameEventsManager : MonoBehaviour
         questEvents = new QuestEvents();
         dialogueEvents = new DialogueEvents();
         mushroomEvents = new MushroomEvents();
+        inventoryEvents = new InventoryEvents();
     }
 }

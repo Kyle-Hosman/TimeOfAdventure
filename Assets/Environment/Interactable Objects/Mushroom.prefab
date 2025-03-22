@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8113880227899798171}
   - component: {fileID: 6567571410047175360}
-  - component: {fileID: 486265183809747325}
+  - component: {fileID: 5596095792249360967}
+  - component: {fileID: 8580151385900182002}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -70,7 +71,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 5.4822493, y: -0.12182772}
   m_Radius: 0.33045578
---- !u!114 &486265183809747325
+--- !u!114 &5596095792249360967
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,6 +85,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnTimeSeconds: 8
   mushroomsCollected: 1
+--- !u!114 &8580151385900182002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887186382282790644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1364b6c7308874ecf94f637d375105d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 4c394998354614cbba2351fe39ef904e, type: 2}
 --- !u!1 &4998875652062873866
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +109,6 @@ GameObject:
   - component: {fileID: 7473458011607664301}
   - component: {fileID: 1179100575706520673}
   - component: {fileID: 2767868302569603712}
-  - component: {fileID: 1662133961073721744}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -195,39 +208,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!58 &1662133961073721744
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4998875652062873866}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.000000059604645, y: 0}
-  m_Radius: 0.06

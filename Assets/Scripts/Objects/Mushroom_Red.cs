@@ -18,7 +18,7 @@ public class Mushroom_Red : MonoBehaviour
         visual = GetComponentInChildren<SpriteRenderer>();
     }
 
-    private void CollectMushroom() 
+    public void CollectMushroom() 
     {
         circleCollider.enabled = false;
         visual.gameObject.SetActive(false);

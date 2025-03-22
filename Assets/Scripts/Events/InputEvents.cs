@@ -38,4 +38,13 @@ public class InputEvents
             onQuestLogTogglePressed();
         }
     }
+
+    public event Action onInventoryTogglePressed;
+    public void InventoryTogglePressed()
+    {
+        if (onInventoryTogglePressed != null) 
+        {
+            onInventoryTogglePressed();
+        }
+    }
 }
