@@ -47,4 +47,22 @@ public class InputEvents
             onInventoryTogglePressed();
         }
     }
+
+    public event Action<Vector2> onNavigateInventory;
+    public void NavigateInventory(Vector2 direction)
+    {
+        if (onNavigateInventory != null)
+        {
+            onNavigateInventory(direction);
+        }
+    }
+
+    public event Action onSelectInventoryItem;
+    public void SelectInventoryItem()
+    {
+        if (onSelectInventoryItem != null)
+        {
+            onSelectInventoryItem();
+        }
+    }
 }

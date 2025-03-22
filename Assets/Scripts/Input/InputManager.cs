@@ -41,4 +41,21 @@ public class InputManager : MonoBehaviour
             GameEventsManager.instance.inputEvents.InventoryTogglePressed();
         }
     }
+
+    public void NavigateInventory(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Vector2 direction = context.ReadValue<Vector2>();
+            GameEventsManager.instance.inputEvents.NavigateInventory(direction);
+        }
+    }
+
+    public void SelectInventoryItem(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GameEventsManager.instance.inputEvents.SelectInventoryItem();
+        }
+    }
 }

@@ -14,10 +14,9 @@ public class ItemPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("OnTriggerEnter called. Trigger entered by: " + other.name);
+   
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player detected. Adding item to inventory: " + item.itemName);
 
             if (item == null)
             {

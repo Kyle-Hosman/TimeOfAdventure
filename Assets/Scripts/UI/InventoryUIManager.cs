@@ -48,7 +48,7 @@ public class InventoryUIManager : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
-        Debug.Log("Updating Inventory UI");
+        //Debug.Log("Updating Inventory UI");
         if (inventorySlotParent == null)
         {
             Debug.LogError("Inventory Slot Parent is not assigned.");
@@ -62,7 +62,7 @@ public class InventoryUIManager : MonoBehaviour
 
         foreach (var item in playerInventoryManager.inventoryItems)
         {
-            Debug.Log("Adding item to UI: " + item.itemName);
+            //Debug.Log("Adding item to UI: " + item.itemName);
             GameObject slot = Instantiate(inventorySlotPrefab, inventorySlotParent);
             slot.SetActive(true); // Ensure the slot is enabled
             Image itemImage = slot.transform.Find("Image").GetComponent<Image>();
@@ -71,7 +71,7 @@ public class InventoryUIManager : MonoBehaviour
                 if (item.itemIcon != null)
                 {
                     itemImage.sprite = item.itemIcon;
-                    Debug.Log("Item icon set: " + item.itemIcon.name);
+                    //Debug.Log("Item icon set: " + item.itemIcon.name);
                 }
                 else
                 {
@@ -81,6 +81,13 @@ public class InventoryUIManager : MonoBehaviour
             else
             {
                 Debug.LogError("Image component not found in inventory slot prefab.");
+            }
+
+            // Ensure the InventoryItem script is added to the slot
+            InventoryItem inventoryItem = slot.GetComponent<InventoryItem>();
+            if (inventoryItem == null)
+            {
+                inventoryItem = slot.AddComponent<InventoryItem>();
             }
         }
     }
