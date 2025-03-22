@@ -17,10 +17,22 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         inventoryItems = new List<InventoryItem>(inventoryGrid.GetComponentsInChildren<InventoryItem>());
+        Debug.Log("Inventory items count at Start: " + inventoryItems.Count);
         
         // Instantiate the selection border prefab and set its parent to the InventoryMainParent GameObject
         selectionBorder = Instantiate(selectionBorderPrefab, inventoryMainParent);
         selectionBorder.transform.SetAsLastSibling(); // Ensure it is rendered on top
+
+        // Ensure the RectTransform properties are correctly set
+        RectTransform borderRect = selectionBorder.GetComponent<RectTransform>();
+        if (borderRect != null)
+        {
+            borderRect.anchorMin = new Vector2(0.5f, 0.5f);
+            borderRect.anchorMax = new Vector2(0.5f, 0.5f);
+            borderRect.pivot = new Vector2(0.5f, 0.5f);
+            borderRect.sizeDelta = new Vector2(100, 100);
+            borderRect.anchoredPosition = new Vector2(132.9422f, 363.2809f);
+        }
 
         Debug.Log("Selection border instantiated: " + selectionBorder.name);
         Debug.Log("Selection border parent: " + selectionBorder.transform.parent.name);
@@ -32,12 +44,14 @@ public class InventoryUI : MonoBehaviour
     {
         GameEventsManager.instance.inputEvents.onNavigateInventory += OnNavigateInventory;
         GameEventsManager.instance.inputEvents.onSelectInventoryItem += OnSelectInventoryItem;
+        GameEventsManager.instance.inputEvents.ChangeInputEventContext(InputEventContext.INVENTORY); // Set context to INVENTORY
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.inputEvents.onNavigateInventory -= OnNavigateInventory;
         GameEventsManager.instance.inputEvents.onSelectInventoryItem -= OnSelectInventoryItem;
+        GameEventsManager.instance.inputEvents.ChangeInputEventContext(InputEventContext.DEFAULT); // Reset context to DEFAULT
     }
 
     private void OnNavigateInventory(Vector2 direction)
@@ -78,11 +92,13 @@ public class InventoryUI : MonoBehaviour
 
     private void UpdateSelection()
     {
-        if (inventoryItems.Count == 0)
-        {
-            selectionBorder.SetActive(false);
-            return;
-        }
+        Debug.Log("Inventory items count at UpdateSelection: " + inventoryItems.Count);
+
+        // if (inventoryItems.Count == 0)
+        // {
+        //     selectionBorder.SetActive(false);
+        //     return;
+        // }
 
         selectionBorder.transform.SetParent(inventoryItems[selectedIndex].transform, false);
         selectionBorder.transform.localPosition = Vector3.zero;
@@ -97,7 +113,15 @@ public class InventoryUI : MonoBehaviour
         RectTransform slotRect = inventoryItems[selectedIndex].GetComponent<RectTransform>();
         if (borderRect != null && slotRect != null)
         {
+            borderRect.anchorMin = slotRect.anchorMin;
+            borderRect.anchorMax = slotRect.anchorMax;
+            borderRect.pivot = slotRect.pivot;
             borderRect.sizeDelta = slotRect.sizeDelta;
+            borderRect.anchoredPosition = slotRect.anchoredPosition;
+
+            // Explicitly reset the RectTransform properties
+            borderRect.localPosition = Vector3.zero;
+            borderRect.localScale = Vector3.one;
         }
 
         // Change the color of the selection border to yellow

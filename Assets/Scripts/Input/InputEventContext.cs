@@ -5,5 +5,6 @@ using UnityEngine;
 public enum InputEventContext
 {
     DEFAULT,
-    DIALOGUE
+    DIALOGUE,
+    INVENTORY // Add INVENTORY context
 }
