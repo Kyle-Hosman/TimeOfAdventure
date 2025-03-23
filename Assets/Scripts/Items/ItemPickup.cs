@@ -8,38 +8,58 @@ public class ItemPickup : MonoBehaviour
 
     private void Awake() 
     {
+        Debug.Log("ItemPickup Awake called");
         circleCollider = GetComponent<CircleCollider2D>();
         visual = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-   
-        if (other.CompareTag("Player"))
+        Debug.Log("OnTriggerEnter2D called with collider: " + other.name);
+        try
         {
-
-            if (item == null)
+            if (other.CompareTag("Player"))
             {
-                Debug.LogError("ItemSO is not set on the ItemPickup script.");
-                return;
+                if (item == null)
+                {
+                    Debug.LogError("ItemSO is not set on the ItemPickup script.");
+                    return;
+                }
+
+                if (GameEventsManager.instance == null)
+                {
+                    Debug.LogError("GameEventsManager instance is null.");
+                    return;
+                }
+
+                if (GameEventsManager.instance.inventoryEvents == null)
+                {
+                    Debug.LogError("GameEventsManager inventoryEvents is null.");
+                    return;
+                }
+
+                Debug.Log("Adding item to inventory: " + item.itemName);
+                GameEventsManager.instance.inventoryEvents.ItemAdded(item);
+                Debug.Log("Picked up item: " + item.itemName);
+
+                // Check if the item is a mushroom and call CollectMushroom
+                // Mushroom_Red mushroom = GetComponent<Mushroom_Red>();
+                // if (mushroom != null)
+                // {
+                //     Debug.Log("Mushroom_Red component found. Collecting mushroom.");
+                //     mushroom.CollectMushroom();
+                // }
+
+                Destroy(gameObject);
             }
-
-            GameEventsManager.instance.inventoryEvents.ItemAdded(item);
-            Debug.Log("Picked up item: " + item.itemName);
-
-            // Check if the item is a mushroom and call CollectMushroom
-            Mushroom_Red mushroom = GetComponent<Mushroom_Red>();
-            if (mushroom != null)
+            else
             {
-                Debug.Log("Mushroom_Red component found. Collecting mushroom.");
-                mushroom.CollectMushroom();
+                Debug.Log("Trigger entered by non-player object.");
             }
-
-            Destroy(gameObject);
         }
-        else
+        catch (System.Exception ex)
         {
-            Debug.Log("Trigger entered by non-player object.");
+            Debug.LogError("Exception in OnTriggerEnter2D: " + ex.Message);
         }
     }
 }

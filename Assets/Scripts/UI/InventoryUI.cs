@@ -54,7 +54,7 @@ public class InventoryUI : MonoBehaviour
 
     private void OnNavigateInventory(Vector2 direction)
     {
-        if (inventoryItems.Count == 0)
+        if (inventoryItems == null || inventoryItems.Count == 0)
         {
             Debug.Log("Inventory is empty, cannot navigate.");
             return;
@@ -91,17 +91,36 @@ public class InventoryUI : MonoBehaviour
 
     private void OnSelectInventoryItem()
     {
+        if (inventoryItems == null || selectedIndex < 0 || selectedIndex >= inventoryItems.Count)
+        {
+            Debug.LogError("Invalid inventory item selection.");
+            return;
+        }
+
         inventoryItems[selectedIndex].UseItem();
+        GameEventsManager.instance.inventoryEvents.ItemUsed(inventoryItems[selectedIndex]);
     }
 
     private void OnUpdateSelectedSlot(int slotIndex)
     {
+        if (slotIndex < 0 || slotIndex >= inventoryItems.Count)
+        {
+            Debug.LogError("Invalid slot index.");
+            return;
+        }
+
         selectedIndex = slotIndex;
         UpdateSelection();
     }
 
     private void UpdateSelection()
     {
+        if (inventoryItems == null || selectedIndex < 0 || selectedIndex >= inventoryItems.Count)
+        {
+            Debug.LogError("Invalid inventory item selection.");
+            return;
+        }
+
         selectionBorder.transform.SetParent(inventoryItems[selectedIndex].transform, false);
         selectionBorder.transform.localPosition = Vector3.zero;
         selectionBorder.transform.localScale = Vector3.one;
@@ -137,6 +156,11 @@ public class InventoryUI : MonoBehaviour
         if (playerInventoryManager != null)
         {
             inventoryItems = new List<InventoryItem>(inventoryGrid.GetComponentsInChildren<InventoryItem>());
+            GameEventsManager.instance.inventoryEvents.InventoryUpdated(inventoryItems.Count);
+        }
+        else
+        {
+            Debug.LogError("PlayerInventoryManager instance is null.");
         }
     }
 }
