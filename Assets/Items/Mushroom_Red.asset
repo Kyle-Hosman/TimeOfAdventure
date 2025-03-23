@@ -9,15 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4aa8c0dd2c2d4354912134801e669bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 6961cbeb3cdc9452a972a8fe3b26194b, type: 3}
   m_Name: Mushroom_Red
   m_EditorClassIdentifier: 
-  itemName: Red Mushroom
-  itemDescription: +1 health
+  itemName: Mushroom Red
   itemIcon: {fileID: -3456242392108647295, guid: 1839659bf0f4f8b4299878c37f2a4b51, type: 3}
-  itemID: 1
-  itemAmount: 1
-  isQuestItem: 0
-  isStackable: 1
   statToChange: 0
   statChangeAmount: 1

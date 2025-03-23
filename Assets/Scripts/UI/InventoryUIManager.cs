@@ -65,7 +65,7 @@ public class InventoryUIManager : MonoBehaviour
             //Debug.Log("Adding item to UI: " + item.itemName);
             GameObject slot = Instantiate(inventorySlotPrefab, inventorySlotParent);
             slot.SetActive(true); // Ensure the slot is enabled
-            Image itemImage = slot.transform.Find("Image").GetComponent<Image>();
+            Image itemImage = slot.transform.Find("Item").GetComponent<Image>();
             if (itemImage != null)
             {
                 if (item.itemIcon != null)

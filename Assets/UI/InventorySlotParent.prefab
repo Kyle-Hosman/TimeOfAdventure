@@ -115,3 +115,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryGrid: {fileID: 6125513383127378346}
   selectionBorderPrefab: {fileID: 3155653064713763599, guid: 1286c8a8f850c43859552302f067c33c, type: 3}
+  inventoryMainParent: {fileID: 0}

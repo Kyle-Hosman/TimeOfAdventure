@@ -14,7 +14,8 @@ public class InputManager : MonoBehaviour
     {
         if (context.performed || context.canceled)
         {
-            GameEventsManager.instance.inputEvents.MovePressed(context.ReadValue<Vector2>());
+            Vector2 direction = context.ReadValue<Vector2>();
+            GameEventsManager.instance.inputEvents.MovePressed(direction);
         }
     }
 

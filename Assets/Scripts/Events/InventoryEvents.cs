@@ -5,6 +5,7 @@ public class InventoryEvents
 {
     public event Action<ItemSO> onItemAdded;
     public event Action<ItemSO> onItemRemoved;
+    public event Action<int> onUpdateSelectedSlot;
 
     public void ItemAdded(ItemSO item)
     {
@@ -14,5 +15,13 @@ public class InventoryEvents
     public void ItemRemoved(ItemSO item)
     {
         onItemRemoved?.Invoke(item);
+    }
+
+    public void UpdateSelectedSlot(int slotIndex)
+    {
+        if (onUpdateSelectedSlot != null)
+        {
+            onUpdateSelectedSlot(slotIndex);
+        }
     }
 }

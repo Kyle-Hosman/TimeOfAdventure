@@ -7,9 +7,9 @@ public class InputEvents
 
     public void ChangeInputEventContext(InputEventContext newContext) 
     {
-        Debug.Log("Changing Input Event Context from " + this.inputEventContext + " to " + newContext);
+        //Debug.Log("Changing Input Event Context from " + this.inputEventContext + " to " + newContext);
         this.inputEventContext = newContext;
-        Debug.Log("New Input Event Context is " + this.inputEventContext);
+        //Debug.Log("New Input Event Context is " + this.inputEventContext);
     }
 
     public event Action<Vector2> onMovePressed;

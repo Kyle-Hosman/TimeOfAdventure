@@ -16,8 +16,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        inventoryItems = new List<InventoryItem>(inventoryGrid.GetComponentsInChildren<InventoryItem>());
-        Debug.Log("Inventory items count at Start: " + inventoryItems.Count);
+        UpdateInventoryItems();
         
         // Instantiate the selection border prefab and set its parent to the InventoryMainParent GameObject
         selectionBorder = Instantiate(selectionBorderPrefab, inventoryMainParent);
@@ -34,9 +33,6 @@ public class InventoryUI : MonoBehaviour
             borderRect.anchoredPosition = new Vector2(132.9422f, 363.2809f);
         }
 
-        Debug.Log("Selection border instantiated: " + selectionBorder.name);
-        Debug.Log("Selection border parent: " + selectionBorder.transform.parent.name);
-
         UpdateSelection();
     }
 
@@ -44,6 +40,7 @@ public class InventoryUI : MonoBehaviour
     {
         GameEventsManager.instance.inputEvents.onNavigateInventory += OnNavigateInventory;
         GameEventsManager.instance.inputEvents.onSelectInventoryItem += OnSelectInventoryItem;
+        GameEventsManager.instance.inventoryEvents.onUpdateSelectedSlot += OnUpdateSelectedSlot;
         GameEventsManager.instance.inputEvents.ChangeInputEventContext(InputEventContext.INVENTORY); // Set context to INVENTORY
     }
 
@@ -51,11 +48,18 @@ public class InventoryUI : MonoBehaviour
     {
         GameEventsManager.instance.inputEvents.onNavigateInventory -= OnNavigateInventory;
         GameEventsManager.instance.inputEvents.onSelectInventoryItem -= OnSelectInventoryItem;
+        GameEventsManager.instance.inventoryEvents.onUpdateSelectedSlot -= OnUpdateSelectedSlot;
         GameEventsManager.instance.inputEvents.ChangeInputEventContext(InputEventContext.DEFAULT); // Reset context to DEFAULT
     }
 
     private void OnNavigateInventory(Vector2 direction)
     {
+        if (inventoryItems.Count == 0)
+        {
+            Debug.Log("Inventory is empty, cannot navigate.");
+            return;
+        }
+
         int columns = inventoryGrid.constraintCount;
         int rows = inventoryItems.Count / columns;
 
@@ -90,23 +94,18 @@ public class InventoryUI : MonoBehaviour
         inventoryItems[selectedIndex].UseItem();
     }
 
+    private void OnUpdateSelectedSlot(int slotIndex)
+    {
+        selectedIndex = slotIndex;
+        UpdateSelection();
+    }
+
     private void UpdateSelection()
     {
-        Debug.Log("Inventory items count at UpdateSelection: " + inventoryItems.Count);
-
-        // if (inventoryItems.Count == 0)
-        // {
-        //     selectionBorder.SetActive(false);
-        //     return;
-        // }
-
         selectionBorder.transform.SetParent(inventoryItems[selectedIndex].transform, false);
         selectionBorder.transform.localPosition = Vector3.zero;
         selectionBorder.transform.localScale = Vector3.one;
         selectionBorder.SetActive(true); // Show the selection border
-
-        Debug.Log("Selection border updated: " + selectionBorder.name);
-        Debug.Log("Selection border parent: " + selectionBorder.transform.parent.name);
 
         // Ensure the selection border matches the size of the inventory slot
         RectTransform borderRect = selectionBorder.GetComponent<RectTransform>();
@@ -129,6 +128,15 @@ public class InventoryUI : MonoBehaviour
         if (borderImage != null)
         {
             borderImage.color = Color.yellow;
+        }
+    }
+
+    public void UpdateInventoryItems()
+    {
+        PlayerInventoryManager playerInventoryManager = PlayerInventoryManager.instance;
+        if (playerInventoryManager != null)
+        {
+            inventoryItems = new List<InventoryItem>(inventoryGrid.GetComponentsInChildren<InventoryItem>());
         }
     }
 }
