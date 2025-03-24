@@ -8,14 +8,12 @@ public class ItemPickup : MonoBehaviour
 
     private void Awake() 
     {
-        Debug.Log("ItemPickup Awake called");
         circleCollider = GetComponent<CircleCollider2D>();
         visual = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("OnTriggerEnter2D called with collider: " + other.name);
         try
         {
             if (other.CompareTag("Player"))
@@ -38,7 +36,13 @@ public class ItemPickup : MonoBehaviour
                     return;
                 }
 
-                Debug.Log("Adding item to inventory: " + item.itemName);
+                if (string.IsNullOrEmpty(item.itemName))
+                {
+                    Debug.LogError("ItemSO itemName is null or empty.");
+                    return;
+                }
+
+                Debug.Log("Calling ItemAdded event for item: " + item.itemName);
                 GameEventsManager.instance.inventoryEvents.ItemAdded(item);
                 Debug.Log("Picked up item: " + item.itemName);
 

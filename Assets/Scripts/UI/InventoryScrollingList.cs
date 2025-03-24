@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,16 +12,13 @@ public class InventoryScrollingList : MonoBehaviour
     [SerializeField] private RectTransform scrollRectTransform;
     [SerializeField] private RectTransform contentRectTransform;
 
-    private Dictionary<ItemSO, InventoryButton> itemToButtonMap = new Dictionary<ItemSO, InventoryButton>();
+    private List<InventoryButton> inventoryButtons = new List<InventoryButton>();
 
-    public InventoryButton CreateButtonIfNotExists(ItemSO item, UnityAction onSelectAction)
+    public InventoryButton CreateButton(ItemSO item, UnityAction onSelectAction)
     {
-        if (!itemToButtonMap.ContainsKey(item))
-        {
-            InventoryButton inventoryButton = InstantiateInventoryButton(item, onSelectAction);
-            itemToButtonMap[item] = inventoryButton;
-        }
-        return itemToButtonMap[item];
+        InventoryButton inventoryButton = InstantiateInventoryButton(item, onSelectAction);
+        inventoryButtons.Add(inventoryButton);
+        return inventoryButton;
     }
 
     private InventoryButton InstantiateInventoryButton(ItemSO item, UnityAction onSelectAction)
@@ -30,14 +26,13 @@ public class InventoryScrollingList : MonoBehaviour
         // create the button
         InventoryButton inventoryButton = Instantiate(buttonPrefab, contentParent).GetComponent<InventoryButton>();
         // game object name in the scene
-        inventoryButton.gameObject.name = item.name +  " (" + item.id + ")";
+        inventoryButton.gameObject.name = item.name + " (" + item.id + ")";
         // initialize and set up function for when the button is selected
         RectTransform buttonRectTransform = inventoryButton.GetComponent<RectTransform>();
         inventoryButton.Initialize(item.itemName, () => {
             onSelectAction();
             UpdateScrolling(buttonRectTransform);
         });
-        itemToButtonMap[item] = inventoryButton;
         return inventoryButton;
     }
 
@@ -69,21 +64,22 @@ public class InventoryScrollingList : MonoBehaviour
         }
     }
 
-    public void RemoveButton(ItemSO item)
+    public void RemoveButton(InventoryButton button)
     {
-        if (itemToButtonMap.ContainsKey(item))
+        if (inventoryButtons.Contains(button))
         {
-            Destroy(itemToButtonMap[item].gameObject);
-            itemToButtonMap.Remove(item);
+            Destroy(button.gameObject);
+            inventoryButtons.Remove(button);
         }
     }
 
     public void ClearList()
     {
-        foreach (var button in itemToButtonMap.Values)
+        Debug.Log("Clearing inventory list...");
+        foreach (var button in inventoryButtons)
         {
             Destroy(button.gameObject);
         }
-        itemToButtonMap.Clear();
+        inventoryButtons.Clear();
     }
 }

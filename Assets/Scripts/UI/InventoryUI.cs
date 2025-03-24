@@ -16,6 +16,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statText2;
     [SerializeField] private TextMeshProUGUI levelRequirementsText;
     [SerializeField] private TextMeshProUGUI questRequirementsText;
+    [SerializeField] private InventorySO inventorySO; // Add this line
 
     private Button firstSelectedButton;
 
@@ -66,7 +67,9 @@ public class InventoryUI : MonoBehaviour
 
     private void PopulateInventoryList()
     {
-        foreach (ItemSO item in InventoryManager.instance.inventoryItems)
+        Debug.Log("Populating inventory list...");
+        scrollingList.ClearList(); // Clear the list before populating
+        foreach (ItemSO item in inventorySO.inventoryItems) // Use inventorySO here
         {
             ItemAdded(item);
         }
@@ -74,13 +77,14 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemAdded(ItemSO item)
     {
-        InventoryButton inventoryButton = scrollingList.CreateButtonIfNotExists(item, () => {
+        Debug.Log("Item added to UI: " + item.itemName);
+        InventoryButton inventoryButton = scrollingList.CreateButton(item, () => {
             SetInventoryInfo(item);
         });
 
         if (firstSelectedButton == null)
         {
-            firstSelectedButton = inventoryButton.button;
+            firstSelectedButton = inventoryButton.GetComponent<Button>();
         }
 
         SetInventoryInfo(item);
@@ -88,7 +92,7 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemRemoved(ItemSO item)
     {
-        scrollingList.RemoveButton(item);
+        // Implement logic to remove the specific button associated with the item
     }
 
     private void SetInventoryInfo(ItemSO item)

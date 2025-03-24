@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class InventoryEvents
 {
@@ -11,11 +12,13 @@ public class InventoryEvents
 
     public void ItemAdded(ItemSO item)
     {
+        Debug.Log("InventoryEvents: ItemAdded called for item: " + item.itemName);
         onItemAdded?.Invoke(item);
     }
 
     public void ItemRemoved(ItemSO item)
     {
+        Debug.Log("InventoryEvents: ItemRemoved called for item: " + item.itemName);
         onItemRemoved?.Invoke(item);
     }
 
@@ -42,4 +45,5 @@ public class InventoryEvents
             onItemUsed(item);
         }
     }
+
 }

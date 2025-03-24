@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
 
-    public List<ItemSO> inventoryItems = new List<ItemSO>();
+    [SerializeField] private InventorySO inventorySO;
 
     private Dictionary<string, ItemSO> itemMap;
 
@@ -63,7 +63,8 @@ public class InventoryManager : MonoBehaviour
 
     private Dictionary<string, ItemSO> CreateItemMap()
     {
-        ItemSO[] allItems = Resources.LoadAll<ItemSO>("Items");
+        //ItemSO[] allItems = Resources.LoadAll<ItemSO>("Items");
+        ItemSO[] allItems = inventorySO.inventoryItems.ToArray();
         Dictionary<string, ItemSO> idToItemMap = new Dictionary<string, ItemSO>();
         foreach (ItemSO item in allItems)
         {
@@ -78,40 +79,62 @@ public class InventoryManager : MonoBehaviour
 
     private ItemSO GetItemById(string id)
     {
-        ItemSO item = itemMap[id];
-        if (item == null)
+        if (itemMap.TryGetValue(id, out ItemSO item))
+        {
+            return item;
+        }
+        else
         {
             Debug.LogError("ID not found in the Item Map: " + id);
+            return null;
         }
-        return item;
     }
 
     public void AddItem(ItemSO item)
     {
-        if (item != null && !inventoryItems.Contains(item))
+        if (item != null)
         {
-            inventoryItems.Add(item);
-            GameEventsManager.instance.inventoryEvents.ItemAdded(item);
+            Debug.Log("Adding item: " + item.itemName);
+            inventorySO.inventoryItems.Add(item);
+            //Debug.Log("Item added to inventoryItems list.");
+            //GameEventsManager.instance.inventoryEvents.ItemAdded(item);
+            //Debug.Log("ItemAdded event triggered.");
+        }
+        else
+        {
+            Debug.LogError("Attempted to add a null item.");
         }
     }
 
     public void RemoveItem(ItemSO item)
     {
-        if (item != null && inventoryItems.Contains(item))
+        if (item != null && inventorySO.inventoryItems.Contains(item))
         {
-            inventoryItems.Remove(item);
-            GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
+            Debug.Log("Removing item: " + item.itemName);
+            inventorySO.inventoryItems.Remove(item);
+            //GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
+        }
+        else
+        {
+            Debug.LogError("Attempted to remove an item that is null or not in the inventory.");
         }
     }
 
     private void HandleItemAdded(ItemSO item)
     {
+        Debug.Log("HandleItemAdded called for item: " + item.itemName);
         AddItem(item);
     }
 
     private void HandleItemRemoved(ItemSO item)
     {
+        Debug.Log("HandleItemRemoved called for item: " + item.itemName);
         RemoveItem(item);
+    }
+
+    public List<ItemSO> GetInventoryItems()
+    {
+        return new List<ItemSO>(inventorySO.inventoryItems);
     }
 
     public void UseItem(ItemSO item)

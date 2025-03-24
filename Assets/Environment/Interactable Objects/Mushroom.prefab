@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8113880227899798171}
   - component: {fileID: 6567571410047175360}
-  - component: {fileID: 5596095792249360967}
-  - component: {fileID: 8645293967300877709}
+  - component: {fileID: 6947936302309254643}
   m_Layer: 0
   m_Name: Mushroom
   m_TagString: Untagged
@@ -71,21 +70,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 5.4822493, y: -0.12182772}
   m_Radius: 0.33045578
---- !u!114 &5596095792249360967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3887186382282790644}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ecb4f1ea58d94e73933545d2eaf7aee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  respawnTimeSeconds: 8
-  mushroomsCollected: 1
---- !u!114 &8645293967300877709
+--- !u!114 &6947936302309254643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
