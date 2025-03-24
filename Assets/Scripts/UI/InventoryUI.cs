@@ -80,7 +80,7 @@ public class InventoryUI : MonoBehaviour
 
         if (firstSelectedButton == null)
         {
-            firstSelectedButton = inventoryButton.GetButton();
+            firstSelectedButton = inventoryButton.button;
         }
 
         SetInventoryInfo(item);

@@ -8,32 +8,23 @@ using UnityEngine.UI;
 
 public class InventoryButton : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI itemNameText;
-    [SerializeField] private Button button;
+    public Button button { get; private set; }
+    private TextMeshProUGUI buttonText;
+    private UnityAction onSelectAction;
 
-    public Button Button => button;
-
-    public void Setup(string itemName, UnityEngine.Events.UnityAction onSelectAction)
+    // because we're instantiating the button and it may be disabled when we
+    // instantiate it, we need to manually initialize anything here.
+    public void Initialize(string displayName, UnityAction selectAction) 
     {
-        if (itemNameText == null)
-        {
-            Debug.LogError("itemNameText is not assigned in the inspector.");
-            return;
-        }
+        this.button = this.GetComponent<Button>();
+        this.buttonText = this.GetComponentInChildren<TextMeshProUGUI>();
 
-        if (button == null)
-        {
-            Debug.LogError("button is not assigned in the inspector.");
-            return;
-        }
-
-        itemNameText.text = itemName;
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(onSelectAction);
+        this.buttonText.text = displayName;
+        this.onSelectAction = selectAction;
+    }
+    public void OnSelect(BaseEventData eventData)
+    {
+        onSelectAction();
     }
 
-    public Button GetButton()
-    {
-        return button;
-    }
 }

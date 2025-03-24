@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6961cbeb3cdc9452a972a8fe3b26194b, type: 3}
   m_Name: Mushroom_Red
   m_EditorClassIdentifier: 
-  id: 1
+  <id>k__BackingField: 6e8b2cb5-b4ad-40f2-b659-f7db3636ee36
   itemName: Mushroom Red
   itemIcon: {fileID: -3456242392108647295, guid: 1839659bf0f4f8b4299878c37f2a4b51, type: 3}
   statToChange: 0

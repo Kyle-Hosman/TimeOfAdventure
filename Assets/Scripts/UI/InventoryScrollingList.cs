@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,13 +30,14 @@ public class InventoryScrollingList : MonoBehaviour
         // create the button
         InventoryButton inventoryButton = Instantiate(buttonPrefab, contentParent).GetComponent<InventoryButton>();
         // game object name in the scene
-        inventoryButton.gameObject.name = item.id + "_button";
+        inventoryButton.gameObject.name = item.name +  " (" + item.id + ")";
         // initialize and set up function for when the button is selected
         RectTransform buttonRectTransform = inventoryButton.GetComponent<RectTransform>();
-        inventoryButton.Setup(item.itemName, () => {
+        inventoryButton.Initialize(item.itemName, () => {
             onSelectAction();
             UpdateScrolling(buttonRectTransform);
         });
+        itemToButtonMap[item] = inventoryButton;
         return inventoryButton;
     }
 
