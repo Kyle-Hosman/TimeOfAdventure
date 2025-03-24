@@ -16,6 +16,11 @@ public class InventoryScrollingList : MonoBehaviour
         {
             GameObject buttonObject = Instantiate(buttonPrefab, contentParent);
             InventoryButton inventoryButton = buttonObject.GetComponent<InventoryButton>();
+            if (inventoryButton == null)
+            {
+                Debug.LogError("InventoryButton component is missing on the button prefab.");
+                return null;
+            }
             inventoryButton.Setup(item.itemName, onSelectAction);
             itemToButtonMap[item] = inventoryButton;
         }
@@ -29,5 +34,14 @@ public class InventoryScrollingList : MonoBehaviour
             Destroy(itemToButtonMap[item].gameObject);
             itemToButtonMap.Remove(item);
         }
+    }
+
+    public void ClearList()
+    {
+        foreach (var button in itemToButtonMap.Values)
+        {
+            Destroy(button.gameObject);
+        }
+        itemToButtonMap.Clear();
     }
 }

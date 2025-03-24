@@ -27,14 +27,38 @@ public class InventoryManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEventsManager.instance.inventoryEvents.onItemAdded += AddItem;
-        GameEventsManager.instance.inventoryEvents.onItemRemoved += RemoveItem;
+        if (GameEventsManager.instance == null)
+        {
+            Debug.LogError("GameEventsManager instance is null.");
+            return;
+        }
+
+        if (GameEventsManager.instance.inventoryEvents == null)
+        {
+            Debug.LogError("GameEventsManager inventoryEvents is null.");
+            return;
+        }
+
+        GameEventsManager.instance.inventoryEvents.onItemAdded += HandleItemAdded;
+        GameEventsManager.instance.inventoryEvents.onItemRemoved += HandleItemRemoved;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.instance.inventoryEvents.onItemAdded -= AddItem;
-        GameEventsManager.instance.inventoryEvents.onItemRemoved -= RemoveItem;
+        if (GameEventsManager.instance == null)
+        {
+            Debug.LogError("GameEventsManager instance is null.");
+            return;
+        }
+
+        if (GameEventsManager.instance.inventoryEvents == null)
+        {
+            Debug.LogError("GameEventsManager inventoryEvents is null.");
+            return;
+        }
+
+        GameEventsManager.instance.inventoryEvents.onItemAdded -= HandleItemAdded;
+        GameEventsManager.instance.inventoryEvents.onItemRemoved -= HandleItemRemoved;
     }
 
     private Dictionary<string, ItemSO> CreateItemMap()
@@ -64,7 +88,7 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(ItemSO item)
     {
-        if (item != null)
+        if (item != null && !inventoryItems.Contains(item))
         {
             inventoryItems.Add(item);
             GameEventsManager.instance.inventoryEvents.ItemAdded(item);
@@ -73,11 +97,21 @@ public class InventoryManager : MonoBehaviour
 
     public void RemoveItem(ItemSO item)
     {
-        if (item != null)
+        if (item != null && inventoryItems.Contains(item))
         {
             inventoryItems.Remove(item);
             GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
         }
+    }
+
+    private void HandleItemAdded(ItemSO item)
+    {
+        AddItem(item);
+    }
+
+    private void HandleItemRemoved(ItemSO item)
+    {
+        RemoveItem(item);
     }
 
     public void UseItem(ItemSO item)

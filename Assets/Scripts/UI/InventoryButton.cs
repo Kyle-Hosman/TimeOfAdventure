@@ -6,26 +6,34 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 
-public class InventoryButton : MonoBehaviour, ISelectHandler
+public class InventoryButton : MonoBehaviour
 {
-    public Button button { get; private set; }
-    private TextMeshProUGUI buttonText;
-    private UnityAction onSelectAction;
+    [SerializeField] private TextMeshProUGUI itemNameText;
+    [SerializeField] private Button button;
 
-    private void Awake()
+    public Button Button => button;
+
+    public void Setup(string itemName, UnityEngine.Events.UnityAction onSelectAction)
     {
-        this.button = this.GetComponent<Button>();
-        this.buttonText = this.GetComponentInChildren<TextMeshProUGUI>();
+        if (itemNameText == null)
+        {
+            Debug.LogError("itemNameText is not assigned in the inspector.");
+            return;
+        }
+
+        if (button == null)
+        {
+            Debug.LogError("button is not assigned in the inspector.");
+            return;
+        }
+
+        itemNameText.text = itemName;
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(onSelectAction);
     }
 
-    public void Setup(string displayName, UnityAction selectAction) 
+    public Button GetButton()
     {
-        this.buttonText.text = displayName;
-        this.onSelectAction = selectAction;
-    }
-
-    public void OnSelect(BaseEventData eventData)
-    {
-        onSelectAction();
+        return button;
     }
 }

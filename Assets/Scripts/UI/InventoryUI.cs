@@ -49,6 +49,7 @@ public class InventoryUI : MonoBehaviour
     {
         contentParent.SetActive(true);
         GameEventsManager.instance.playerEvents.DisablePlayerMovement();
+        PopulateInventoryList();
         if (firstSelectedButton != null)
         {
             firstSelectedButton.Select();
@@ -60,6 +61,15 @@ public class InventoryUI : MonoBehaviour
         contentParent.SetActive(false);
         GameEventsManager.instance.playerEvents.EnablePlayerMovement();
         EventSystem.current.SetSelectedGameObject(null);
+        scrollingList.ClearList();
+    }
+
+    private void PopulateInventoryList()
+    {
+        foreach (ItemSO item in InventoryManager.instance.inventoryItems)
+        {
+            ItemAdded(item);
+        }
     }
 
     private void ItemAdded(ItemSO item)
@@ -70,7 +80,7 @@ public class InventoryUI : MonoBehaviour
 
         if (firstSelectedButton == null)
         {
-            firstSelectedButton = inventoryButton.button;
+            firstSelectedButton = inventoryButton.GetButton();
         }
 
         SetInventoryInfo(item);
@@ -84,23 +94,10 @@ public class InventoryUI : MonoBehaviour
     private void SetInventoryInfo(ItemSO item)
     {
         itemDisplayNameText.text = item.itemName;
-
-
-        // status
-        itemDescriptionText.text = item.itemName;//placeholder until I add description
-
-
-        // requirements
+        itemDescriptionText.text = item.itemName; //placeholder until I add description
         levelRequirementsText.text = "Level " + item.itemName; //placeholder
-        questRequirementsText.text = "";
-        /*foreach (QuestInfoSO prerequisiteQuestInfo in quest.info.questPrerequisites)
-        {
-        questRequirementsText.text += prerequisiteQuestInfo.displayName + "\n";
-        }*/
         questRequirementsText.text = "Quest Requirements: " + item.itemName; //placeholder
-
-        // rewards
-        statText1.text = "stat1"; //placeholder"
+        statText1.text = "stat1"; //placeholder
         statText2.text = "stat2"; //placeholder
     }
 }

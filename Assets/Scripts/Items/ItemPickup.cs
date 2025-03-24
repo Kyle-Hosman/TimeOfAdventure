@@ -42,14 +42,6 @@ public class ItemPickup : MonoBehaviour
                 GameEventsManager.instance.inventoryEvents.ItemAdded(item);
                 Debug.Log("Picked up item: " + item.itemName);
 
-                // Check if the item is a mushroom and call CollectMushroom
-                // Mushroom_Red mushroom = GetComponent<Mushroom_Red>();
-                // if (mushroom != null)
-                // {
-                //     Debug.Log("Mushroom_Red component found. Collecting mushroom.");
-                //     mushroom.CollectMushroom();
-                // }
-
                 Destroy(gameObject);
             }
             else
@@ -60,6 +52,7 @@ public class ItemPickup : MonoBehaviour
         catch (System.Exception ex)
         {
             Debug.LogError("Exception in OnTriggerEnter2D: " + ex.Message);
+            Debug.LogError("Stack Trace: " + ex.StackTrace);
         }
     }
 }
