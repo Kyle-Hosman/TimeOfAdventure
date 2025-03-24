@@ -1930,6 +1930,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 7230596964453444703, guid: 50ed0605c33d34b81af7cff35eb730d9, type: 3}
   contentParent: {fileID: 5512231353797340101}
+  scrollRectTransform: {fileID: 5461998642421666811}
+  contentRectTransform: {fileID: 7794798955835214335}
 --- !u!1 &8343541626914834954
 GameObject:
   m_ObjectHideFlags: 0
