@@ -14,23 +14,22 @@ public class InventoryScrollingList : MonoBehaviour
 
     private List<InventoryButton> inventoryButtons = new List<InventoryButton>();
 
-    public InventoryButton CreateButton(ItemSO item, UnityAction onSelectAction)
+    public InventoryButton CreateButton(ItemSO item)
     {
-        InventoryButton inventoryButton = InstantiateInventoryButton(item, onSelectAction);
+        InventoryButton inventoryButton = InstantiateInventoryButton(item);
         inventoryButtons.Add(inventoryButton);
         return inventoryButton;
     }
 
-    private InventoryButton InstantiateInventoryButton(ItemSO item, UnityAction onSelectAction)
+    private InventoryButton InstantiateInventoryButton(ItemSO item)
     {
         // create the button
         InventoryButton inventoryButton = Instantiate(buttonPrefab, contentParent).GetComponent<InventoryButton>();
         // game object name in the scene
         inventoryButton.gameObject.name = item.name + " (" + item.id + ")";
-        // initialize and set up function for when the button is selected
+        // initialize with a default action
         RectTransform buttonRectTransform = inventoryButton.GetComponent<RectTransform>();
-        inventoryButton.Initialize(item.itemName, () => {
-            onSelectAction();
+        inventoryButton.Initialize(item, () => {
             UpdateScrolling(buttonRectTransform);
         });
         return inventoryButton;

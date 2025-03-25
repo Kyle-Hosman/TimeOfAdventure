@@ -6,25 +6,35 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 
-public class InventoryButton : MonoBehaviour
+public class InventoryButton : MonoBehaviour, ISelectHandler
 {
-    public Button button { get; private set; }
-    private TextMeshProUGUI buttonText;
+    [SerializeField] private TextMeshProUGUI buttonText; // Use TextMeshProUGUI for TMP support
     private UnityAction onSelectAction;
 
-    // because we're instantiating the button and it may be disabled when we
-    // instantiate it, we need to manually initialize anything here.
-    public void Initialize(string displayName, UnityAction selectAction) 
+    public void Initialize(ItemSO item, UnityAction onSelectAction)
     {
-        this.button = this.GetComponent<Button>();
-        this.buttonText = this.GetComponentInChildren<TextMeshProUGUI>();
+        if (buttonText == null)
+        {
+            buttonText = GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText == null)
+            {
+                Debug.LogError("buttonText is not assigned and no TextMeshProUGUI component found in children.");
+                return;
+            }
+        }
 
-        this.buttonText.text = displayName;
-        this.onSelectAction = selectAction;
+        buttonText.text = item.itemName;
+        this.onSelectAction = onSelectAction;
     }
-    public void OnSelect(BaseEventData eventData)
+
+    public void SetOnSelectAction(UnityAction onSelectAction)
     {
+        this.onSelectAction = onSelectAction;
+    }
+
+     public void OnSelect(BaseEventData eventData)
+    {
+        Debug.Log("InventoryButton.OnSelect");
         onSelectAction();
     }
-
 }

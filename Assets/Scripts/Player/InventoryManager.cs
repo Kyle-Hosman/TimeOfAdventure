@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager instance;
 
     [SerializeField] private InventorySO inventorySO;
 
@@ -12,16 +11,6 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         itemMap = CreateItemMap();
     }
 
@@ -41,6 +30,7 @@ public class InventoryManager : MonoBehaviour
 
         GameEventsManager.instance.inventoryEvents.onItemAdded += HandleItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved += HandleItemRemoved;
+        GameEventsManager.instance.inventoryEvents.onUseItem += HandleUseItem;
     }
 
     private void OnDisable()
@@ -59,6 +49,7 @@ public class InventoryManager : MonoBehaviour
 
         GameEventsManager.instance.inventoryEvents.onItemAdded -= HandleItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved -= HandleItemRemoved;
+        GameEventsManager.instance.inventoryEvents.onUseItem -= HandleUseItem;
     }
 
     private Dictionary<string, ItemSO> CreateItemMap()
@@ -132,6 +123,19 @@ public class InventoryManager : MonoBehaviour
         RemoveItem(item);
     }
 
+    private void HandleUseItem(ItemSO item)
+    {
+        Debug.Log("HandleUseItem called for item: " + (item != null ? item.itemName : "null"));
+        if (item != null)
+        {
+            UseItem(item);
+        }
+        else
+        {
+            Debug.LogError("HandleUseItem: Item is null.");
+        }
+    }
+
     public List<ItemSO> GetInventoryItems()
     {
         return new List<ItemSO>(inventorySO.inventoryItems);
@@ -143,6 +147,9 @@ public class InventoryManager : MonoBehaviour
         {
             case ItemSO.StatToChange.Health:
                 GameEventsManager.instance.playerEvents.HealthChanged(item.statChangeAmount);
+                Debug.Log("Health changed by: " + item.statChangeAmount);
+                GameEventsManager.instance.goldEvents.GoldGained(1000);
+                GameEventsManager.instance.playerEvents.ExperienceGained(1000);
                 break;
             case ItemSO.StatToChange.Mana:
                 // Implement mana change logic

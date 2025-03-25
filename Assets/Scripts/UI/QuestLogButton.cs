@@ -25,6 +25,7 @@ public class QuestLogButton : MonoBehaviour, ISelectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
+        Debug.Log("QuestLogButton.OnSelect");
         onSelectAction();
     }
 
