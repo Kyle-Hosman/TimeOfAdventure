@@ -40,7 +40,7 @@ public class InventoryEvents
 
     public void UseItem(ItemSO item)
     {
-        Debug.Log("InventoryEvents: UseItem called for item: " + (item != null ? item.itemName : "null"));
+        //Debug.Log("InventoryEvents: UseItem called for item: " + (item != null ? item.itemName : "null"));
         if (item != null)
         {
             onUseItem?.Invoke(item);

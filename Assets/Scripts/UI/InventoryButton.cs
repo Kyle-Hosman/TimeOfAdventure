@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,10 @@ using UnityEngine.UI;
 
 public class InventoryButton : MonoBehaviour, ISelectHandler
 {
+    [SerializeField] private Button button;
     [SerializeField] private TextMeshProUGUI buttonText; // Use TextMeshProUGUI for TMP support
     private UnityAction onSelectAction;
+    private ItemSO item; // Store the associated item
 
     public void Initialize(ItemSO item, UnityAction onSelectAction)
     {
@@ -25,6 +28,11 @@ public class InventoryButton : MonoBehaviour, ISelectHandler
 
         buttonText.text = item.itemName;
         this.onSelectAction = onSelectAction;
+        this.item = item; // Assign the item
+
+        // Configure the button's OnClick event to invoke the onUseItem event
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() => GameEventsManager.instance.inventoryEvents.UseItem(item));
     }
 
     public void SetOnSelectAction(UnityAction onSelectAction)
@@ -32,9 +40,9 @@ public class InventoryButton : MonoBehaviour, ISelectHandler
         this.onSelectAction = onSelectAction;
     }
 
-     public void OnSelect(BaseEventData eventData)
+    public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log("InventoryButton.OnSelect");
+        //Debug.Log("InventoryButton.OnSelect");
         onSelectAction();
     }
 }

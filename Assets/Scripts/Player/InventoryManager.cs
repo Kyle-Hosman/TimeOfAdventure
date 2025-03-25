@@ -31,6 +31,7 @@ public class InventoryManager : MonoBehaviour
         GameEventsManager.instance.inventoryEvents.onItemAdded += HandleItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved += HandleItemRemoved;
         GameEventsManager.instance.inventoryEvents.onUseItem += HandleUseItem;
+   
     }
 
     private void OnDisable()
@@ -51,6 +52,7 @@ public class InventoryManager : MonoBehaviour
         GameEventsManager.instance.inventoryEvents.onItemRemoved -= HandleItemRemoved;
         GameEventsManager.instance.inventoryEvents.onUseItem -= HandleUseItem;
     }
+
 
     private Dictionary<string, ItemSO> CreateItemMap()
     {
@@ -87,9 +89,6 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("Adding item: " + item.itemName);
             inventorySO.inventoryItems.Add(item);
-            //Debug.Log("Item added to inventoryItems list.");
-            //GameEventsManager.instance.inventoryEvents.ItemAdded(item);
-            //Debug.Log("ItemAdded event triggered.");
         }
         else
         {
@@ -103,7 +102,6 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("Removing item: " + item.itemName);
             inventorySO.inventoryItems.Remove(item);
-            //GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
         }
         else
         {
@@ -113,19 +111,17 @@ public class InventoryManager : MonoBehaviour
 
     private void HandleItemAdded(ItemSO item)
     {
-        Debug.Log("HandleItemAdded called for item: " + item.itemName);
         AddItem(item);
     }
 
     private void HandleItemRemoved(ItemSO item)
     {
-        Debug.Log("HandleItemRemoved called for item: " + item.itemName);
         RemoveItem(item);
     }
 
     private void HandleUseItem(ItemSO item)
     {
-        Debug.Log("HandleUseItem called for item: " + (item != null ? item.itemName : "null"));
+        //Debug.Log("HandleUseItem called for item: " + (item != null ? item.itemName : "null"));
         if (item != null)
         {
             UseItem(item);
@@ -148,8 +144,6 @@ public class InventoryManager : MonoBehaviour
             case ItemSO.StatToChange.Health:
                 GameEventsManager.instance.playerEvents.HealthChanged(item.statChangeAmount);
                 Debug.Log("Health changed by: " + item.statChangeAmount);
-                GameEventsManager.instance.goldEvents.GoldGained(1000);
-                GameEventsManager.instance.playerEvents.ExperienceGained(1000);
                 break;
             case ItemSO.StatToChange.Mana:
                 // Implement mana change logic

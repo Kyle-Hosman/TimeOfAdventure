@@ -67,7 +67,7 @@ public class InventoryUI : MonoBehaviour
 
     private void PopulateInventoryList()
     {
-        Debug.Log("Populating inventory list...");
+       //Debug.Log("Populating inventory list...");
         scrollingList.ClearList(); // Clear the list before populating
         foreach (ItemSO item in inventorySO.inventoryItems)
         {
@@ -80,9 +80,9 @@ public class InventoryUI : MonoBehaviour
         //Debug.Log("Item added to UI: " + item.itemName);
         InventoryButton inventoryButton = scrollingList.CreateButton(item);
         inventoryButton.SetOnSelectAction(() => {
-            GameEventsManager.instance.inventoryEvents.UseItem(item); // Use InventoryEvents
+            //GameEventsManager.instance.inventoryEvents.UseItem(item); // Use InventoryEvents
             SetInventoryInfo(item);
-            Debug.Log("Used item: " + item.itemName);
+            //Debug.Log("Used item: " + item.itemName);
         });
 
         if (firstSelectedButton == null)
