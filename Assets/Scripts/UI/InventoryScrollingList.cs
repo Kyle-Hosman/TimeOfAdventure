@@ -62,11 +62,25 @@ public class InventoryScrollingList : MonoBehaviour
             );
         }
     }
+    public InventoryButton GetButtonFromItem(ItemSO item)
+    {
+        foreach (var button in inventoryButtons)
+        {
+            if (button.item == item)
+            {
+                Debug.Log("Button found: " + button.name);
+                return button;
+            }
+        }
+        Debug.Log("Button not found for item: " + item.itemName);
+        return null;
+    }
 
     public void RemoveButton(InventoryButton button)
     {
         if (inventoryButtons.Contains(button))
         {
+            Debug.Log("DESTROYING button: " + button.name);
             Destroy(button.gameObject);
             inventoryButtons.Remove(button);
         }

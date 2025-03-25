@@ -102,6 +102,7 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("Removing item: " + item.itemName);
             inventorySO.inventoryItems.Remove(item);
+            GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
         }
         else
         {
@@ -125,6 +126,9 @@ public class InventoryManager : MonoBehaviour
         if (item != null)
         {
             UseItem(item);
+            Debug.Log("Used and removed item: " + item.itemName);
+            HandleItemRemoved(item);
+
         }
         else
         {

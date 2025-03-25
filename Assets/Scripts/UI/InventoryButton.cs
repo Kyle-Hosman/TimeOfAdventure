@@ -12,7 +12,7 @@ public class InventoryButton : MonoBehaviour, ISelectHandler
     [SerializeField] private Button button;
     [SerializeField] private TextMeshProUGUI buttonText; // Use TextMeshProUGUI for TMP support
     private UnityAction onSelectAction;
-    private ItemSO item; // Store the associated item
+    public ItemSO item; // Store the associated item
 
     public void Initialize(ItemSO item, UnityAction onSelectAction)
     {

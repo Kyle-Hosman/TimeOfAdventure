@@ -95,6 +95,8 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemRemoved(ItemSO item)
     {
+        Debug.Log("REMOVING BUTTON: " + item.itemName);
+        scrollingList.RemoveButton(scrollingList.GetButtonFromItem(item));
         // Implement logic to remove the specific button associated with the item
     }
 
