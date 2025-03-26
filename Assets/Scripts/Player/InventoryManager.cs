@@ -87,7 +87,6 @@ public class InventoryManager : MonoBehaviour
     {
         if (item != null)
         {
-            Debug.Log("Adding item: " + item.itemName);
             inventorySO.inventoryItems.Add(item);
         }
         else
@@ -100,7 +99,6 @@ public class InventoryManager : MonoBehaviour
     {
         if (item != null && inventorySO.inventoryItems.Contains(item))
         {
-            Debug.Log("Removing item: " + item.itemName);
             inventorySO.inventoryItems.Remove(item);
 
             // Notify the UI to update the inventory list
@@ -117,7 +115,6 @@ public class InventoryManager : MonoBehaviour
         if (item != null)
         {
             UseItem(item);
-            Debug.Log("Used and removed item: " + item.itemName);
             HandleItemRemoved(item); // Directly call HandleItemRemoved
 
             // Notify the UI to update the inventory list

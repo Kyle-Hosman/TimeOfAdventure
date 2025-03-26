@@ -42,9 +42,9 @@ public class ItemPickup : MonoBehaviour
                     return;
                 }
 
-                Debug.Log("Calling ItemAdded event for item: " + item.itemName);
+                //Debug.Log("Calling ItemAdded event for item: " + item.itemName);
                 GameEventsManager.instance.inventoryEvents.ItemAdded(item);
-                Debug.Log("Picked up item: " + item.itemName);
+                //Debug.Log("Picked up item: " + item.itemName);
 
                 Destroy(gameObject);
             }

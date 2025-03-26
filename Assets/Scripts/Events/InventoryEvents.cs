@@ -12,13 +12,13 @@ public class InventoryEvents
 
     public void ItemAdded(ItemSO item)
     {
-        Debug.Log("InventoryEvents: ItemAdded called for item: " + item.itemName);
+        //Debug.Log("InventoryEvents: ItemAdded called for item: " + item.itemName);
         onItemAdded?.Invoke(item);
     }
 
     public void ItemRemoved(ItemSO item)
     {
-        Debug.Log("InventoryEvents: ItemRemoved called for item: " + item.itemName);
+        //Debug.Log("InventoryEvents: ItemRemoved called for item: " + item.itemName);
         onItemRemoved?.Invoke(item);
     }
 

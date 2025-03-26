@@ -77,7 +77,7 @@ public class InventoryScrollingList : MonoBehaviour
         {
             if (button.item == item)
             {
-                Debug.Log("Button found: " + button.name);
+                //Debug.Log("Button found: " + button.name);
                 return button;
             }
         }
@@ -102,7 +102,7 @@ public class InventoryScrollingList : MonoBehaviour
     {
         if (inventoryButtons.Contains(button))
         {
-            Debug.Log("DESTROYING button: " + button.name);
+            //Debug.Log("DESTROYING button: " + button.name);
             Destroy(button.gameObject);
             inventoryButtons.Remove(button);
         }
@@ -110,7 +110,7 @@ public class InventoryScrollingList : MonoBehaviour
 
     public void ClearList()
     {
-        Debug.Log("Clearing inventory list...");
+        //Debug.Log("Clearing inventory list...");
         foreach (var button in inventoryButtons)
         {
             Destroy(button.gameObject);

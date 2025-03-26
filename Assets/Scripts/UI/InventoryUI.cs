@@ -69,7 +69,6 @@ public class InventoryUI : MonoBehaviour
 
     private void PopulateInventoryList()
     {
-       //Debug.Log("Populating inventory list...");
         scrollingList.ClearList(); // Clear the list before populating
         foreach (ItemSO item in inventorySO.inventoryItems)
         {
@@ -79,12 +78,9 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemAdded(ItemSO item)
     {
-        //Debug.Log("Item added to UI: " + item.itemName);
         InventoryButton inventoryButton = scrollingList.CreateButton(item);
         inventoryButton.SetOnSelectAction(() => {
-            //GameEventsManager.instance.inventoryEvents.UseItem(item); // Use InventoryEvents
             SetInventoryInfo(item);
-            //Debug.Log("Used item: " + item.itemName);
         });
 
         if (firstSelectedButton == null)
@@ -97,7 +93,6 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemRemoved(ItemSO item)
     {
-        Debug.Log("REMOVING BUTTON: " + item.itemName);
         scrollingList.RemoveButton(scrollingList.GetButtonFromItem(item));
         // Implement logic to remove the specific button associated with the item
     }
@@ -114,7 +109,6 @@ public class InventoryUI : MonoBehaviour
 
     private void RefreshInventoryList(int itemCount)
     {
-        Debug.Log("Refreshing inventory list. Item count: " + itemCount);
         PopulateInventoryList(); // Re-populate the inventory list
     }
 }
