@@ -25,6 +25,7 @@ public class InventoryUI : MonoBehaviour
         GameEventsManager.instance.inputEvents.onInventoryTogglePressed += InventoryTogglePressed;
         GameEventsManager.instance.inventoryEvents.onItemAdded += ItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved += ItemRemoved;
+        GameEventsManager.instance.inventoryEvents.onInventoryUpdated += RefreshInventoryList; // Listen for updates
     }
 
     private void OnDisable()
@@ -32,6 +33,7 @@ public class InventoryUI : MonoBehaviour
         GameEventsManager.instance.inputEvents.onInventoryTogglePressed -= InventoryTogglePressed;
         GameEventsManager.instance.inventoryEvents.onItemAdded -= ItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved -= ItemRemoved;
+        GameEventsManager.instance.inventoryEvents.onInventoryUpdated -= RefreshInventoryList; // Stop listening
     }
 
     private void InventoryTogglePressed()
@@ -108,5 +110,11 @@ public class InventoryUI : MonoBehaviour
         questRequirementsText.text = "Quest Requirements: " + item.itemName; //placeholder
         statText1.text = "stat1"; //placeholder
         statText2.text = "stat2"; //placeholder
+    }
+
+    private void RefreshInventoryList(int itemCount)
+    {
+        Debug.Log("Refreshing inventory list. Item count: " + itemCount);
+        PopulateInventoryList(); // Re-populate the inventory list
     }
 }

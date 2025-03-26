@@ -102,6 +102,9 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("Removing item: " + item.itemName);
             inventorySO.inventoryItems.Remove(item);
+
+            // Notify the UI to update the inventory list
+            GameEventsManager.instance.inventoryEvents.InventoryUpdated(inventorySO.inventoryItems.Count);
         }
         else
         {
@@ -115,7 +118,10 @@ public class InventoryManager : MonoBehaviour
         {
             UseItem(item);
             Debug.Log("Used and removed item: " + item.itemName);
-            HandleItemRemoved(item); // Directly call RemoveItem without triggering the event
+            HandleItemRemoved(item); // Directly call HandleItemRemoved
+
+            // Notify the UI to update the inventory list
+            GameEventsManager.instance.inventoryEvents.InventoryUpdated(inventorySO.inventoryItems.Count);
         }
         else
         {
