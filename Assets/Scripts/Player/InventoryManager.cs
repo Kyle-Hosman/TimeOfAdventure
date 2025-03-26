@@ -83,7 +83,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItem(ItemSO item)
+    public void HandleItemAdded(ItemSO item)
     {
         if (item != null)
         {
@@ -96,13 +96,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void RemoveItem(ItemSO item)
+    public void HandleItemRemoved(ItemSO item)
     {
         if (item != null && inventorySO.inventoryItems.Contains(item))
         {
             Debug.Log("Removing item: " + item.itemName);
             inventorySO.inventoryItems.Remove(item);
-            GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
         }
         else
         {
@@ -110,25 +109,13 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void HandleItemAdded(ItemSO item)
-    {
-        AddItem(item);
-    }
-
-    private void HandleItemRemoved(ItemSO item)
-    {
-        RemoveItem(item);
-    }
-
     private void HandleUseItem(ItemSO item)
     {
-        //Debug.Log("HandleUseItem called for item: " + (item != null ? item.itemName : "null"));
         if (item != null)
         {
             UseItem(item);
             Debug.Log("Used and removed item: " + item.itemName);
-            HandleItemRemoved(item);
-
+            HandleItemRemoved(item); // Directly call RemoveItem without triggering the event
         }
         else
         {
