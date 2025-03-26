@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6961cbeb3cdc9452a972a8fe3b26194b, type: 3}
   m_Name: Heart
   m_EditorClassIdentifier: 
-  <id>k__BackingField: 3bb8446b-67ed-4bf8-a561-6c57b2a6dfa3
+  <id>k__BackingField: 4bb8446b-67ed-4bf8-a561-6c57b2a6dfa3
   itemName: Heart
   itemIcon: {fileID: 21300000, guid: 8f03d65eca65243d0963f648c2e9824a, type: 3}
   statToChange: 0

@@ -16,6 +16,15 @@ public class InventoryScrollingList : MonoBehaviour
 
     public InventoryButton CreateButton(ItemSO item)
     {
+        // Check if the item already exists in the list
+        InventoryButton existingButton = inventoryButtons.Find(button => button.item == item);
+        if (existingButton != null)
+        {
+            existingButton.IncrementQuantity();
+            return existingButton;
+        }
+
+        // Create a new button if the item doesn't exist
         InventoryButton inventoryButton = InstantiateInventoryButton(item);
         inventoryButtons.Add(inventoryButton);
         return inventoryButton;
@@ -74,6 +83,19 @@ public class InventoryScrollingList : MonoBehaviour
         }
         Debug.Log("Button not found for item: " + item.itemName);
         return null;
+    }
+
+    public void UseItem(ItemSO item)
+    {
+        InventoryButton button = GetButtonFromItem(item);
+        if (button != null)
+        {
+            button.DecrementQuantity();
+            if (button.Quantity <= 0)
+            {
+                RemoveButton(button);
+            }
+        }
     }
 
     public void RemoveButton(InventoryButton button)

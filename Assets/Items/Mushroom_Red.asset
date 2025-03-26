@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mushroom_Red
   m_EditorClassIdentifier: 
   <id>k__BackingField: 2
-  itemName: Mushroom Red2
+  itemName: Mushroom Red
   itemIcon: {fileID: -3456242392108647295, guid: 1839659bf0f4f8b4299878c37f2a4b51, type: 3}
   statToChange: 0
   statChangeAmount: 1
