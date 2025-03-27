@@ -48,21 +48,21 @@ public class PlayerEvents
         }
     }
 
-    public event Action<int> onHealthChanged;
-    public void HealthChanged(int healthChange) 
-    {
-        if (onHealthChanged != null) 
-        {
-            onHealthChanged(healthChange);
-        }
-    }
-
     public event Action<int> onPlayerHealthChange;
-    public void PlayerHealthChange(int health) 
+    public void PlayerHealthChanged(int health) 
     {
         if (onPlayerHealthChange != null) 
         {
             onPlayerHealthChange(health);
+        }
+    }
+
+    public event Action<int> onPlayerHealthGained;
+    public void PlayerHealthGained(int health) 
+    {
+        if (onPlayerHealthGained != null) 
+        {
+            onPlayerHealthGained(health);
         }
     }
 

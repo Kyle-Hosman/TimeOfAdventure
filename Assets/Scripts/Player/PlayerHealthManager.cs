@@ -16,24 +16,31 @@ public class PlayerHealthManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEventsManager.instance.playerEvents.onHealthChanged += HealthChanged;
+        GameEventsManager.instance.playerEvents.onPlayerHealthGained += HealthGained;
     }
 
     private void OnDisable() 
     {
-        GameEventsManager.instance.playerEvents.onHealthChanged -= HealthChanged;
+        GameEventsManager.instance.playerEvents.onPlayerHealthGained -= HealthGained;
     }
 
     private void Start()
     {
-        GameEventsManager.instance.playerEvents.PlayerHealthChange(currentHealth);
+        GameEventsManager.instance.playerEvents.PlayerHealthChanged(currentHealth);
     }
 
-    private void HealthChanged(int healthChange) 
+    private void HealthGained(int healthChange) 
     {
         currentHealth += healthChange;
-        currentHealth = Mathf.Clamp(currentHealth, 0, startingHealth);
-        GameEventsManager.instance.playerEvents.PlayerHealthChange(currentHealth);
+        //currentHealth = Mathf.Clamp(currentHealth, 0, startingHealth);
+
+        // Notify UI only if health actually changes
+        if (healthChange != 0)
+        {
+            Debug.Log("Current health: " + currentHealth);
+            Debug.Log("Health change: " + healthChange);
+            GameEventsManager.instance.playerEvents.PlayerHealthChanged(currentHealth);
+        }
 
         if (currentHealth <= 0)
         {

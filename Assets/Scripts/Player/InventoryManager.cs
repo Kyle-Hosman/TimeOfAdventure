@@ -136,7 +136,7 @@ public class InventoryManager : MonoBehaviour
         switch (item.statToChange)
         {
             case ItemSO.StatToChange.Health:
-                GameEventsManager.instance.playerEvents.HealthChanged(item.statChangeAmount);
+                GameEventsManager.instance.playerEvents.PlayerHealthGained(item.statChangeAmount);
                 Debug.Log("Health changed by: " + item.statChangeAmount);
                 break;
             case ItemSO.StatToChange.Mana:
