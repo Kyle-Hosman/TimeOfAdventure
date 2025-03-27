@@ -14,7 +14,7 @@ public class InventoryScrollingList : MonoBehaviour
 
     private List<InventoryButton> inventoryButtons = new List<InventoryButton>();
 
-    public InventoryButton CreateButton(ItemSO item)
+    public InventoryButton CreateButton(ItemSO item, UnityAction selectAction)
     {
         // Check if the item already exists in the list
         InventoryButton existingButton = inventoryButtons.Find(button => button.item == item);
@@ -25,20 +25,21 @@ public class InventoryScrollingList : MonoBehaviour
         }
 
         // Create a new button if the item doesn't exist
-        InventoryButton inventoryButton = InstantiateInventoryButton(item);
+        InventoryButton inventoryButton = InstantiateInventoryButton(item, selectAction);
         inventoryButtons.Add(inventoryButton);
         return inventoryButton;
     }
 
-    private InventoryButton InstantiateInventoryButton(ItemSO item)
+    private InventoryButton InstantiateInventoryButton(ItemSO item, UnityAction selectAction)
     {
         // create the button
-        InventoryButton inventoryButton = Instantiate(buttonPrefab, contentParent).GetComponent<InventoryButton>();
+        InventoryButton inventoryButton = Instantiate(buttonPrefab, contentParent.transform).GetComponent<InventoryButton>();
         // game object name in the scene
         inventoryButton.gameObject.name = item.name + " (" + item.id + ")";
         // initialize with a default action
         RectTransform buttonRectTransform = inventoryButton.GetComponent<RectTransform>();
         inventoryButton.Initialize(item, () => {
+            selectAction();
             UpdateScrolling(buttonRectTransform);
         });
         return inventoryButton;
@@ -77,11 +78,9 @@ public class InventoryScrollingList : MonoBehaviour
         {
             if (button.item == item)
             {
-                //Debug.Log("Button found: " + button.name);
                 return button;
             }
         }
-        Debug.Log("Button not found for item: " + item.itemName);
         return null;
     }
 
@@ -102,7 +101,6 @@ public class InventoryScrollingList : MonoBehaviour
     {
         if (inventoryButtons.Contains(button))
         {
-            //Debug.Log("DESTROYING button: " + button.name);
             Destroy(button.gameObject);
             inventoryButtons.Remove(button);
         }
@@ -110,11 +108,21 @@ public class InventoryScrollingList : MonoBehaviour
 
     public void ClearList()
     {
-        //Debug.Log("Clearing inventory list...");
+        //Debug.Log("Clearing inventory list..");
         foreach (var button in inventoryButtons)
         {
             Destroy(button.gameObject);
         }
         inventoryButtons.Clear();
+    }
+
+    public bool HasButtons()
+    {
+        return inventoryButtons.Count > 0;
+    }
+
+    public InventoryButton GetFirstButton()
+    {
+        return inventoryButtons.Count > 0 ? inventoryButtons[0] : null;
     }
 }

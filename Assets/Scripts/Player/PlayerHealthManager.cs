@@ -37,8 +37,6 @@ public class PlayerHealthManager : MonoBehaviour
         // Notify UI only if health actually changes
         if (healthChange != 0)
         {
-            Debug.Log("Current health: " + currentHealth);
-            Debug.Log("Health change: " + healthChange);
             GameEventsManager.instance.playerEvents.PlayerHealthChanged(currentHealth);
         }
 

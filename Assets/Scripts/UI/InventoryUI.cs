@@ -25,7 +25,7 @@ public class InventoryUI : MonoBehaviour
         GameEventsManager.instance.inputEvents.onInventoryTogglePressed += InventoryTogglePressed;
         GameEventsManager.instance.inventoryEvents.onItemAdded += ItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved += ItemRemoved;
-        GameEventsManager.instance.inventoryEvents.onInventoryUpdated += RefreshInventoryList; // Listen for updates
+        GameEventsManager.instance.inventoryEvents.onInventoryUpdated += RefreshInventoryList;
     }
 
     private void OnDisable()
@@ -33,7 +33,7 @@ public class InventoryUI : MonoBehaviour
         GameEventsManager.instance.inputEvents.onInventoryTogglePressed -= InventoryTogglePressed;
         GameEventsManager.instance.inventoryEvents.onItemAdded -= ItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved -= ItemRemoved;
-        GameEventsManager.instance.inventoryEvents.onInventoryUpdated -= RefreshInventoryList; // Stop listening
+        GameEventsManager.instance.inventoryEvents.onInventoryUpdated -= RefreshInventoryList;
     }
 
     private void InventoryTogglePressed()
@@ -69,7 +69,7 @@ public class InventoryUI : MonoBehaviour
 
     private void PopulateInventoryList()
     {
-        scrollingList.ClearList(); // Clear the list before populating
+        scrollingList.ClearList();
         foreach (ItemSO item in inventorySO.inventoryItems)
         {
             ItemAdded(item);
@@ -78,14 +78,15 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemAdded(ItemSO item)
     {
-        InventoryButton inventoryButton = scrollingList.CreateButton(item);
-        inventoryButton.SetOnSelectAction(() => {
+        InventoryButton inventoryButton = scrollingList.CreateButton(item, () =>
+        {
             SetInventoryInfo(item);
         });
 
+
         if (firstSelectedButton == null)
         {
-            firstSelectedButton = inventoryButton.GetComponent<Button>();
+            firstSelectedButton = inventoryButton.button;
         }
 
         SetInventoryInfo(item);
@@ -93,8 +94,24 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemRemoved(ItemSO item)
     {
-        scrollingList.RemoveButton(scrollingList.GetButtonFromItem(item));
-        // Implement logic to remove the specific button associated with the item
+        InventoryButton removedButton = scrollingList.GetButtonFromItem(item);
+        scrollingList.RemoveButton(removedButton);
+        PopulateInventoryList(); // Refresh the list after removing an item
+
+        // Update the firstSelectedButton to the next available button
+        if (scrollingList.HasButtons())
+        {
+            firstSelectedButton = scrollingList.GetFirstButton()?.button;
+            if (firstSelectedButton != null)
+            {
+                EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject); // Explicitly set the selection
+            }
+        }
+        else
+        {
+            firstSelectedButton = null; // Clear selection if no buttons remain
+            EventSystem.current.SetSelectedGameObject(null); // Clear UI selection
+        }
     }
 
     private void SetInventoryInfo(ItemSO item)
@@ -109,6 +126,6 @@ public class InventoryUI : MonoBehaviour
 
     private void RefreshInventoryList(int itemCount)
     {
-        PopulateInventoryList(); // Re-populate the inventory list
+        PopulateInventoryList();
     }
 }

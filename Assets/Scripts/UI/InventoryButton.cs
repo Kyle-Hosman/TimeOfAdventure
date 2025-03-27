@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class InventoryButton : MonoBehaviour, ISelectHandler
 {
-    [SerializeField] private Button button;
+    [SerializeField] public Button button;
     [SerializeField] private TextMeshProUGUI buttonText; // Use TextMeshProUGUI for TMP support
     private UnityAction onSelectAction;
     public ItemSO item; // Store the associated item
