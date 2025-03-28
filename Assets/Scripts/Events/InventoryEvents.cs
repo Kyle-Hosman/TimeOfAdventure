@@ -7,7 +7,7 @@ public class InventoryEvents
     public event Action<ItemSO> onItemAdded;
     public event Action<ItemSO> onItemRemoved;
     public event Action<int> onUpdateSelectedSlot;
-    public event Action<int> onInventoryUpdated;
+    public event Action onInventoryUpdated;
     public event Action<ItemSO> onUseItem;
 
     public void ItemAdded(ItemSO item)
@@ -30,24 +30,13 @@ public class InventoryEvents
         }
     }
 
-    public void InventoryUpdated(int itemCount)
+    public void InventoryUpdated()
     {
-        if (onInventoryUpdated != null)
-        {
-            onInventoryUpdated(itemCount);
-        }
+        onInventoryUpdated?.Invoke();
     }
 
     public void UseItem(ItemSO item)
     {
-        //Debug.Log("InventoryEvents: UseItem called for item: " + (item != null ? item.itemName : "null"));
-        if (item != null)
-        {
             onUseItem?.Invoke(item);
-        }
-        else
-        {
-            Debug.LogError("InventoryEvents: Item is null when trying to use it.");
-        }
     }
 }

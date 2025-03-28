@@ -25,7 +25,7 @@ public class InventoryUI : MonoBehaviour
         GameEventsManager.instance.inputEvents.onInventoryTogglePressed += InventoryTogglePressed;
         GameEventsManager.instance.inventoryEvents.onItemAdded += ItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved += ItemRemoved;
-        GameEventsManager.instance.inventoryEvents.onInventoryUpdated += RefreshInventoryList;
+        GameEventsManager.instance.inventoryEvents.onInventoryUpdated += InventoryUpdated;
     }
 
     private void OnDisable()
@@ -33,7 +33,7 @@ public class InventoryUI : MonoBehaviour
         GameEventsManager.instance.inputEvents.onInventoryTogglePressed -= InventoryTogglePressed;
         GameEventsManager.instance.inventoryEvents.onItemAdded -= ItemAdded;
         GameEventsManager.instance.inventoryEvents.onItemRemoved -= ItemRemoved;
-        GameEventsManager.instance.inventoryEvents.onInventoryUpdated -= RefreshInventoryList;
+        GameEventsManager.instance.inventoryEvents.onInventoryUpdated -= InventoryUpdated;
     }
 
     private void InventoryTogglePressed()
@@ -52,7 +52,7 @@ public class InventoryUI : MonoBehaviour
     {
         contentParent.SetActive(true);
         GameEventsManager.instance.playerEvents.DisablePlayerMovement();
-        PopulateInventoryList();
+        InventoryUpdated();
         if (firstSelectedButton != null)
         {
             firstSelectedButton.Select();
@@ -67,7 +67,7 @@ public class InventoryUI : MonoBehaviour
         scrollingList.ClearList();
     }
 
-    private void PopulateInventoryList()
+    private void InventoryUpdated()
     {
         scrollingList.ClearList();
         foreach (ItemSO item in inventorySO.inventoryItems)
@@ -96,7 +96,7 @@ public class InventoryUI : MonoBehaviour
     {
         InventoryButton removedButton = scrollingList.GetButtonFromItem(item);
         scrollingList.RemoveButton(removedButton);
-        PopulateInventoryList(); // Refresh the list after removing an item
+        InventoryUpdated(); // Refresh the list after removing an item
 
         // Update the firstSelectedButton to the next available button
         if (scrollingList.HasButtons())
@@ -122,10 +122,5 @@ public class InventoryUI : MonoBehaviour
         questRequirementsText.text = "Quest Requirements: " + item.itemName; //placeholder
         statText1.text = "stat1"; //placeholder
         statText2.text = "stat2"; //placeholder
-    }
-
-    private void RefreshInventoryList(int itemCount)
-    {
-        PopulateInventoryList();
     }
 }

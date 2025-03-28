@@ -71,19 +71,6 @@ public class InventoryManager : MonoBehaviour
         return idToItemMap;
     }
 
-    private ItemSO GetItemById(string id)
-    {
-        if (itemMap.TryGetValue(id, out ItemSO item))
-        {
-            return item;
-        }
-        else
-        {
-            Debug.LogError("ID not found in the Item Map: " + id);
-            return null;
-        }
-    }
-
     public void HandleItemAdded(ItemSO item)
     {
         if (item != null)
@@ -103,7 +90,7 @@ public class InventoryManager : MonoBehaviour
             inventorySO.inventoryItems.Remove(item);
 
             // Notify the UI to update the inventory list
-            GameEventsManager.instance.inventoryEvents.InventoryUpdated(inventorySO.inventoryItems.Count);
+            GameEventsManager.instance.inventoryEvents.InventoryUpdated();
         }
         else
         {
@@ -119,7 +106,7 @@ public class InventoryManager : MonoBehaviour
             HandleItemRemoved(item); // Directly call HandleItemRemoved
 
             // Notify the UI to update the inventory list
-            GameEventsManager.instance.inventoryEvents.InventoryUpdated(inventorySO.inventoryItems.Count);
+            GameEventsManager.instance.inventoryEvents.InventoryUpdated();
         }
         else
         {
