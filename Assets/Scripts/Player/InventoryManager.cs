@@ -64,7 +64,6 @@ public class InventoryManager : MonoBehaviour
     {
         if (isProcessingItemRemoved)
         {
-            Debug.LogWarning("ItemRemoved is already being processed. Skipping recursive call.");
             return;
         }
 
@@ -77,7 +76,6 @@ public class InventoryManager : MonoBehaviour
                 inventorySO.inventoryItems.Remove(item);
 
                 // Notify the UI to update the inventory list
-                Debug.Log($"ItemRemoved invoked for item: {item.itemName}");
                 GameEventsManager.instance.inventoryEvents.ItemRemoved(item); // This triggers the event
             }
             else
@@ -91,22 +89,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    /*public void ItemRemoved(ItemSO item)
-    {
-        if (item != null && inventorySO.inventoryItems.Contains(item))
-        {
-            inventorySO.inventoryItems.Remove(item);
-
-            // Notify the UI to update the inventory list
-            //GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
-            //GameEventsManager.instance.inventoryEvents.InventoryUpdated();
-        }
-        else
-        {
-            Debug.LogError("Attempted to remove an item that is null or not in the inventory.");
-        }
-    }*/
-
     private void InvokeItemRemovedEvent(ItemSO item)
     {
         GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
@@ -117,8 +99,7 @@ public class InventoryManager : MonoBehaviour
         if (item != null)
         {
             UseItem(item);
-            ItemRemoved(item); // Directly call ItemRemoved
-            //GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
+            ItemRemoved(item);
 
             // Notify the UI to update the inventory list
             GameEventsManager.instance.inventoryEvents.InventoryUpdated();

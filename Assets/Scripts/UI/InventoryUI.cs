@@ -68,14 +68,12 @@ public class InventoryUI : MonoBehaviour
             if (firstButton != null && firstButton.button != null)
             {
                 firstSelectedButton = firstButton.button;
-                Debug.Log($"Selector set to the first item: {firstButton.item.itemName}");
             }
         }
 
         if (firstSelectedButton != null && firstSelectedButton.gameObject.activeInHierarchy && firstSelectedButton.interactable)
         {
             EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
-            Debug.Log($"Set selected GameObject to: {firstSelectedButton.gameObject.name}");
         }
         else
         {
@@ -87,13 +85,11 @@ public class InventoryUI : MonoBehaviour
     {
         contentParent.SetActive(false);
         GameEventsManager.instance.playerEvents.EnablePlayerMovement();
-        //EventSystem.current.SetSelectedGameObject(null);
         scrollingList.ClearList();
     }
 
     private void InventoryUpdated()
     {
-        Debug.Log("InventoryUpdated ran from InventoryUI");
         scrollingList.ClearList();
         foreach (ItemSO item in inventorySO.inventoryItems)
         {
@@ -120,8 +116,6 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemRemoved(ItemSO item)
     {
-        Debug.Log($"ItemRemoved ran from InventoryUI for item: {item.itemName}");
-
         // Start a coroutine to wait for InventoryUpdated to finish
         StartCoroutine(HandleItemRemovedAfterUpdate(item));
     }
@@ -137,12 +131,10 @@ public class InventoryUI : MonoBehaviour
         {
             // Stack still exists, keep the selector on the same button
             firstSelectedButton = button.button;
-            Debug.Log($"Selector remains on the same stack: {item.itemName}");
 
             if (firstSelectedButton != null && firstSelectedButton.gameObject.activeInHierarchy && firstSelectedButton.interactable)
             {
                 EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
-                Debug.Log($"Set selected GameObject to: {firstSelectedButton.gameObject.name}");
             }
             else
             {
@@ -156,13 +148,11 @@ public class InventoryUI : MonoBehaviour
             if (nextButton != null && nextButton.button != null && nextButton.button.gameObject.activeInHierarchy && nextButton.button.interactable)
             {
                 firstSelectedButton = nextButton.button;
-                Debug.Log($"Selector moved to the next item: {nextButton.item.itemName}");
                 EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
             }
             else
             {
                 // No buttons remain, clear the selection
-                Debug.LogWarning("No items remain in the inventory. Clearing selection.");
                 firstSelectedButton = null;
                 EventSystem.current.SetSelectedGameObject(null);
             }
