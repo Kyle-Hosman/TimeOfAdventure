@@ -53,9 +53,33 @@ public class InventoryUI : MonoBehaviour
         contentParent.SetActive(true);
         GameEventsManager.instance.playerEvents.DisablePlayerMovement();
         InventoryUpdated();
-        if (firstSelectedButton != null)
+
+        // Start a coroutine to set the selection after the UI is fully updated
+        StartCoroutine(SetInitialSelection());
+    }
+
+    private IEnumerator SetInitialSelection()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (firstSelectedButton == null && scrollingList.HasButtons())
         {
-            firstSelectedButton.Select();
+            InventoryButton firstButton = scrollingList.GetFirstButton();
+            if (firstButton != null && firstButton.button != null)
+            {
+                firstSelectedButton = firstButton.button;
+                Debug.Log($"Selector set to the first item: {firstButton.item.itemName}");
+            }
+        }
+
+        if (firstSelectedButton != null && firstSelectedButton.gameObject.activeInHierarchy && firstSelectedButton.interactable)
+        {
+            EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
+            Debug.Log($"Set selected GameObject to: {firstSelectedButton.gameObject.name}");
+        }
+        else
+        {
+            Debug.LogWarning("No valid button to select when opening the inventory.");
         }
     }
 
@@ -63,12 +87,13 @@ public class InventoryUI : MonoBehaviour
     {
         contentParent.SetActive(false);
         GameEventsManager.instance.playerEvents.EnablePlayerMovement();
-        EventSystem.current.SetSelectedGameObject(null);
+        //EventSystem.current.SetSelectedGameObject(null);
         scrollingList.ClearList();
     }
 
     private void InventoryUpdated()
     {
+        Debug.Log("InventoryUpdated ran from InventoryUI");
         scrollingList.ClearList();
         foreach (ItemSO item in inventorySO.inventoryItems)
         {
@@ -78,6 +103,7 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemAdded(ItemSO item)
     {
+        //Debug.Log("ItemAdded ran from InventoryUI");
         InventoryButton inventoryButton = scrollingList.CreateButton(item, () =>
         {
             SetInventoryInfo(item);
@@ -94,25 +120,74 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemRemoved(ItemSO item)
     {
-        InventoryButton removedButton = scrollingList.GetButtonFromItem(item);
-        scrollingList.RemoveButton(removedButton);
-        InventoryUpdated(); // Refresh the list after removing an item
+        Debug.Log($"ItemRemoved ran from InventoryUI for item: {item.itemName}");
 
-        // Update the firstSelectedButton to the next available button
-        if (scrollingList.HasButtons())
+        // Start a coroutine to wait for InventoryUpdated to finish
+        StartCoroutine(HandleItemRemovedAfterUpdate(item));
+    }
+
+    private IEnumerator HandleItemRemovedAfterUpdate(ItemSO item)
+    {
+        // Wait for the end of the frame to ensure InventoryUpdated has completed
+        yield return new WaitForEndOfFrame();
+
+        // Check if the stack still exists
+        InventoryButton button = scrollingList.GetButtonFromItem(item);
+        if (button != null)
         {
-            firstSelectedButton = scrollingList.GetFirstButton()?.button;
-            if (firstSelectedButton != null)
+            // Stack still exists, keep the selector on the same button
+            firstSelectedButton = button.button;
+            Debug.Log($"Selector remains on the same stack: {item.itemName}");
+
+            if (firstSelectedButton != null && firstSelectedButton.gameObject.activeInHierarchy && firstSelectedButton.interactable)
             {
-                EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject); // Explicitly set the selection
+                EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
+                Debug.Log($"Set selected GameObject to: {firstSelectedButton.gameObject.name}");
+            }
+            else
+            {
+                Debug.LogWarning("Cannot set selected GameObject. Button is either null, inactive, or not interactable.");
             }
         }
         else
         {
-            firstSelectedButton = null; // Clear selection if no buttons remain
-            EventSystem.current.SetSelectedGameObject(null); // Clear UI selection
+            // Stack was removed, move to the next available button
+            InventoryButton nextButton = scrollingList.GetFirstButton();
+            if (nextButton != null && nextButton.button != null && nextButton.button.gameObject.activeInHierarchy && nextButton.button.interactable)
+            {
+                firstSelectedButton = nextButton.button;
+                Debug.Log($"Selector moved to the next item: {nextButton.item.itemName}");
+                EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject);
+            }
+            else
+            {
+                // No buttons remain, clear the selection
+                Debug.LogWarning("No items remain in the inventory. Clearing selection.");
+                firstSelectedButton = null;
+                EventSystem.current.SetSelectedGameObject(null);
+            }
         }
     }
+
+    /*private void ItemRemoved(ItemSO item)
+    {
+        Debug.Log("ItemRemoved ran from InventoryUI");
+        //InventoryButton removedButton = scrollingList.GetButtonFromItem(item);
+        //scrollingList.RemoveButton(removedButton);
+
+        //GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
+
+        // Update the firstSelectedButton to the next available button
+
+        Debug.Log("Setting firstSelectedButton");
+        firstSelectedButton = scrollingList.GetFirstButton().button;
+        if (firstSelectedButton != null)
+        {
+            //EventSystem.current.SetSelectedGameObject(firstSelectedButton.gameObject); // Explicitly set the selection
+        }
+        
+     
+    }*/
 
     private void SetInventoryInfo(ItemSO item)
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class InventoryScrollingList : MonoBehaviour
 {
@@ -89,7 +90,7 @@ public class InventoryScrollingList : MonoBehaviour
         InventoryButton button = GetButtonFromItem(item);
         if (button != null)
         {
-            button.DecrementQuantity();
+            //button.DecrementQuantity();
             if (button.Quantity <= 0)
             {
                 RemoveButton(button);
@@ -99,11 +100,18 @@ public class InventoryScrollingList : MonoBehaviour
 
     public void RemoveButton(InventoryButton button)
     {
-        if (inventoryButtons.Contains(button))
+        Debug.Log("RemoveButton called in InventoryScrollingList");
+        /*if (inventoryButtons.Contains(button))
         {
-            Destroy(button.gameObject);
-            inventoryButtons.Remove(button);
-        }
+            //Destroy(button.gameObject);
+            //inventoryButtons.Remove(button);
+            Debug.Log("Setting firstSelectedButton");
+            InventoryButton SelectedButton = GetFirstButton();
+            if (SelectedButton != null)
+            {
+                EventSystem.current.SetSelectedGameObject(SelectedButton.gameObject); // Explicitly set the selection
+            }
+        }*/
     }
 
     public void ClearList()

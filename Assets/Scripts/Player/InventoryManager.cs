@@ -16,40 +16,15 @@ public class InventoryManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (GameEventsManager.instance == null)
-        {
-            Debug.LogError("GameEventsManager instance is null.");
-            return;
-        }
-
-        if (GameEventsManager.instance.inventoryEvents == null)
-        {
-            Debug.LogError("GameEventsManager inventoryEvents is null.");
-            return;
-        }
-
-        GameEventsManager.instance.inventoryEvents.onItemAdded += HandleItemAdded;
-        GameEventsManager.instance.inventoryEvents.onItemRemoved += HandleItemRemoved;
+        GameEventsManager.instance.inventoryEvents.onItemAdded += ItemAdded;
+        GameEventsManager.instance.inventoryEvents.onItemRemoved += ItemRemoved;
         GameEventsManager.instance.inventoryEvents.onUseItem += HandleUseItem;
-   
     }
 
     private void OnDisable()
     {
-        if (GameEventsManager.instance == null)
-        {
-            Debug.LogError("GameEventsManager instance is null.");
-            return;
-        }
-
-        if (GameEventsManager.instance.inventoryEvents == null)
-        {
-            Debug.LogError("GameEventsManager inventoryEvents is null.");
-            return;
-        }
-
-        GameEventsManager.instance.inventoryEvents.onItemAdded -= HandleItemAdded;
-        GameEventsManager.instance.inventoryEvents.onItemRemoved -= HandleItemRemoved;
+        GameEventsManager.instance.inventoryEvents.onItemAdded -= ItemAdded;
+        GameEventsManager.instance.inventoryEvents.onItemRemoved -= ItemRemoved;
         GameEventsManager.instance.inventoryEvents.onUseItem -= HandleUseItem;
     }
 
@@ -63,7 +38,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (idToItemMap.ContainsKey(item.id))
             {
-                Debug.LogWarning("Duplicate ID found when creating item map: " + item.id);
+                //Debug.LogWarning("Duplicate ID found when creating item map: " + item.id);
                 continue;
             }
             idToItemMap.Add(item.id, item);
@@ -71,7 +46,7 @@ public class InventoryManager : MonoBehaviour
         return idToItemMap;
     }
 
-    public void HandleItemAdded(ItemSO item)
+    public void ItemAdded(ItemSO item)
     {
         if (item != null)
         {
@@ -83,19 +58,58 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void HandleItemRemoved(ItemSO item)
+    private bool isProcessingItemRemoved = false;
+
+    public void ItemRemoved(ItemSO item)
+    {
+        if (isProcessingItemRemoved)
+        {
+            Debug.LogWarning("ItemRemoved is already being processed. Skipping recursive call.");
+            return;
+        }
+
+        isProcessingItemRemoved = true;
+
+        try
+        {
+            if (item != null && inventorySO.inventoryItems.Contains(item))
+            {
+                inventorySO.inventoryItems.Remove(item);
+
+                // Notify the UI to update the inventory list
+                Debug.Log($"ItemRemoved invoked for item: {item.itemName}");
+                GameEventsManager.instance.inventoryEvents.ItemRemoved(item); // This triggers the event
+            }
+            else
+            {
+                Debug.LogError("Attempted to remove an item that is null or not in the inventory.");
+            }
+        }
+        finally
+        {
+            isProcessingItemRemoved = false;
+        }
+    }
+
+    /*public void ItemRemoved(ItemSO item)
     {
         if (item != null && inventorySO.inventoryItems.Contains(item))
         {
             inventorySO.inventoryItems.Remove(item);
 
             // Notify the UI to update the inventory list
-            GameEventsManager.instance.inventoryEvents.InventoryUpdated();
+            //GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
+            //GameEventsManager.instance.inventoryEvents.InventoryUpdated();
         }
         else
         {
             Debug.LogError("Attempted to remove an item that is null or not in the inventory.");
         }
+    }*/
+
+    private void InvokeItemRemovedEvent(ItemSO item)
+    {
+        GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
     }
 
     private void HandleUseItem(ItemSO item)
@@ -103,7 +117,8 @@ public class InventoryManager : MonoBehaviour
         if (item != null)
         {
             UseItem(item);
-            HandleItemRemoved(item); // Directly call HandleItemRemoved
+            ItemRemoved(item); // Directly call ItemRemoved
+            //GameEventsManager.instance.inventoryEvents.ItemRemoved(item);
 
             // Notify the UI to update the inventory list
             GameEventsManager.instance.inventoryEvents.InventoryUpdated();

@@ -12,31 +12,26 @@ public class InventoryEvents
 
     public void ItemAdded(ItemSO item)
     {
-        //Debug.Log("InventoryEvents: ItemAdded called for item: " + item.itemName);
-        onItemAdded?.Invoke(item);
+        onItemAdded(item);
     }
 
     public void ItemRemoved(ItemSO item)
     {
-        //Debug.Log("InventoryEvents: ItemRemoved called for item: " + item.itemName);
-        onItemRemoved?.Invoke(item);
+        onItemRemoved(item);
     }
 
     public void UpdateSelectedSlot(int slotIndex)
     {
-        if (onUpdateSelectedSlot != null)
-        {
-            onUpdateSelectedSlot(slotIndex);
-        }
+        onUpdateSelectedSlot(slotIndex);
     }
 
     public void InventoryUpdated()
     {
-        onInventoryUpdated?.Invoke();
+        onInventoryUpdated();
     }
 
     public void UseItem(ItemSO item)
     {
-            onUseItem?.Invoke(item);
+        onUseItem(item);
     }
 }
