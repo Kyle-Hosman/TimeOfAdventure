@@ -64,6 +64,7 @@ public class InventoryManager : MonoBehaviour
             if (idToItemMap.ContainsKey(item.id))
             {
                 Debug.LogWarning("Duplicate ID found when creating item map: " + item.id);
+                continue;
             }
             idToItemMap.Add(item.id, item);
         }
