@@ -29,14 +29,36 @@ public class QuestPoint : MonoBehaviour
 
     private void OnEnable()
     {
+        if (GameEventsManager.instance == null)
+        {
+            //Debug.LogWarning("GameEventsManager is not initialized yet. QuestPoint will retry initialization.");
+            StartCoroutine(WaitForGameEventsManager());
+            return;
+        }
+
+        GameEventsManager.instance.questEvents.onQuestStateChange += QuestStateChange;
+        GameEventsManager.instance.inputEvents.onSubmitPressed += SubmitPressed;
+    }
+
+    private IEnumerator WaitForGameEventsManager()
+    {
+        while (GameEventsManager.instance == null)
+        {
+            yield return null; // Wait for the next frame
+        }
+
+        // Subscribe to events once GameEventsManager is ready
         GameEventsManager.instance.questEvents.onQuestStateChange += QuestStateChange;
         GameEventsManager.instance.inputEvents.onSubmitPressed += SubmitPressed;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.instance.questEvents.onQuestStateChange -= QuestStateChange;
-        GameEventsManager.instance.inputEvents.onSubmitPressed -= SubmitPressed;
+        if (GameEventsManager.instance != null)
+        {
+            GameEventsManager.instance.questEvents.onQuestStateChange -= QuestStateChange;
+            GameEventsManager.instance.inputEvents.onSubmitPressed -= SubmitPressed;
+        }
     }
 
     private void SubmitPressed(InputEventContext inputEventContext)
